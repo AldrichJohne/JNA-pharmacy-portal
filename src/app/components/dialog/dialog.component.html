@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Add Product</h1>
+<div mat-dialog-content>
+    <form [formGroup]="productForm">
+        <mat-form-field appearance="outline">
+            <mat-label>Product Category</mat-label>
+            <mat-select formControlName="category" placeholder="category...">
+                <mat-option [value]="8">Branded</mat-option>
+                <mat-option [value]="9">Generic</mat-option>
+                <mat-option [value]="10">Galenical</mat-option>
+                <mat-option [value]="11">Ice Cream</mat-option>
+                <mat-option [value]="12">Others</mat-option>
+            </mat-select>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+            <mat-label>Product Name</mat-label>
+            <input formControlName="name" matInput placeholder="product name...">
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+            <mat-label>Total Stocks</mat-label>
+            <input formControlName="totalStock" matInput type="number" placeholder="total stocks...">
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+            <mat-label>Price</mat-label>
+            <input formControlName="pricePerPc" matInput type="number" placeholder="price...">
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline">
+            <mat-label>SRP</mat-label>
+            <input formControlName="srpPerPc" matInput type="number" placeholder="srp...">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label>Expiration Date</mat-label>
+            <input formControlName="expiryDate" matInput [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </form>
+</div> 
+
+<div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+    <button style="margin-left: 8px;" mat-raised-button color="primary" (click)="addProduct()">{{actionBtn}}</button>
+</div>
