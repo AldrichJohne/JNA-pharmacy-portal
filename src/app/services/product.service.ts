@@ -22,7 +22,7 @@ export class ProductService {
     return this.http.get<any>(this.baseUrl + '/classifications')
   }
 
-  getProducts() {
+  getBranded() {
     return this.http.get<any>(this.baseUrl + '/products')
   }
 

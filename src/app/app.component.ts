@@ -15,7 +15,8 @@ export class AppComponent implements OnInit{
   title = 'product-system-v1';
 
   displayedColumns: string[] = ['cashier', 'name', 'classification', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'action'];
-  dataSource!: MatTableDataSource<any>;
+  dataSourceBranded!: MatTableDataSource<any>;
+  dataSourceGeneric!: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -25,7 +26,7 @@ export class AppComponent implements OnInit{
 
   }
   ngOnInit(): void {
-    this.getAllProducts();
+    this.getAllBranded();
   }
 
   openDialog() {
@@ -33,18 +34,18 @@ export class AppComponent implements OnInit{
       width:'50%'
     }).afterClosed().subscribe(val=>{
       if(val==='save'){
-        this.getAllProducts();
+        this.getAllBranded();
       }
     })
   }
 
-  getAllProducts() {
-    this.productService.getProducts()
+  getAllBranded() {
+    this.productService.getBranded()
     .subscribe({
       next:(res)=>{
-        this.dataSource = new MatTableDataSource(res);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.dataSourceBranded = new MatTableDataSource(res);
+        this.dataSourceBranded.paginator = this.paginator;
+        this.dataSourceBranded.sort = this.sort;
       },
       error:(err)=>{
         alert("Error While Fetiching The Products!")
@@ -58,7 +59,7 @@ export class AppComponent implements OnInit{
       data:row
     }).afterClosed().subscribe(val=>{
       if(val==='update'){
-        this.getAllProducts();
+        this.getAllBranded();
       }
     })
   }
@@ -68,21 +69,21 @@ export class AppComponent implements OnInit{
     .subscribe({
       next: (res) => {
         alert("Product Deleted Successfully!")
-        this.getAllProducts();
+        this.getAllBranded();
       },
       error:()=>{
         alert("Error While Deleting The Record")
-        this.getAllProducts();
+        this.getAllBranded();
       }
     })
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSourceBranded.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.dataSourceBranded.paginator) {
+      this.dataSourceBranded.paginator.firstPage();
     }
   }
 }
