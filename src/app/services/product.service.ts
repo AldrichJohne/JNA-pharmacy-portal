@@ -6,8 +6,9 @@ import { Injectable } from '@angular/core';
 })
 export class ProductService {
   private baseUrl = 'http://localhost:9090/inventory';
+  private baseUrlNew = 'http://localhost:9090';
   classification = '';
-  
+
   public setCategory(category: string) {
     this.classification = category;
   }
@@ -23,7 +24,19 @@ export class ProductService {
   }
 
   getBranded() {
-    return this.http.get<any>(this.baseUrl + '/products')
+    return this.http.get<any>(this.baseUrlNew + '/tables/class/1')
+  }
+  getGeneric() {
+    return this.http.get<any>(this.baseUrlNew + '/tables/class/2')
+  }
+  getGalenical() {
+    return this.http.get<any>(this.baseUrlNew + '/tables/class/3')
+  }
+  getIceCream() {
+    return this.http.get<any>(this.baseUrlNew + '/tables/class/4')
+  }
+  getOthers() {
+    return this.http.get<any>(this.baseUrlNew + '/tables/class/5')
   }
 
   putProduct(data : any, id : number) {
