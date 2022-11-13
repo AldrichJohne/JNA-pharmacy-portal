@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProductService {
-  private baseUrl = 'http://localhost:9090/inventory';
+  private baseUrl = 'http://localhost:8080/inventory';
   classification = '';
-  
+
   public setCategory(category: string) {
     this.classification = category;
   }
