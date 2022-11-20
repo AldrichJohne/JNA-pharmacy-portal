@@ -14,7 +14,7 @@ export class ProductService {
 
   constructor(private http : HttpClient) { }
 
-  postProduct(data : any) {
+  addProduct(data : any) {
     return this.http.post(this.baseUrl + '/' + this.classification + '/products', data)
   }
 
@@ -22,16 +22,24 @@ export class ProductService {
     return this.http.get<any>(this.baseUrl + '/classifications')
   }
 
-  getBranded() {
+  getProductList() {
     return this.http.get<any>(this.baseUrl + '/products')
   }
 
-  putProduct(data : any, id : number) {
+  updateProduct(data : any, id : number) {
     return this.http.put<any>(this.baseUrl + '/products/' + id, data)
   }
 
   deleteProduct(id : number) {
     return this.http.delete<any>(this.baseUrl + '/products/' + id)
+  }
+
+  productSale(data : any, id : number) {
+    return this.http.post(this.baseUrl + '/product/sale/' + id, data)
+  }
+
+  getProductSales() {
+    return this.http.get<any>(this.baseUrl + '/products/sale')
   }
 
 }

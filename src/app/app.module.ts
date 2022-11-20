@@ -21,11 +21,13 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTabsModule} from '@angular/material/tabs';
+import { SaleDialogComponent } from './components/sale-dialog/sale-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogComponent
+    DialogComponent,
+    SaleDialogComponent
   ],
   imports: [
     BrowserModule,

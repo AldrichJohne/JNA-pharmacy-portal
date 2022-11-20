@@ -10,27 +10,29 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DialogComponent implements OnInit {
 
-  productForm !: FormGroup;
+  productForm!: FormGroup;
   actionBtn: string = "Save"
+  productFormTitle: string = "ADD PRODUCT"
 
-  constructor(private formBuilder : FormBuilder, 
+  constructor(private formBuilder : FormBuilder,
               private productService: ProductService,
-              @Inject(MAT_DIALOG_DATA) public editData : any, 
+              @Inject(MAT_DIALOG_DATA) public editData : any,
               private dialogRef : MatDialogRef<DialogComponent>) { }
 
   ngOnInit(): void {
-    this.productForm = this.formBuilder.group({
-      name: ['',Validators.required],
-      category: ['',Validators.required],
-      totalStock: ['',Validators.required],
-      pricePerPc: ['',Validators.required],
-      srpPerPc: ['',Validators.required],
-      expiryDate: ['',Validators.required]
-    });
+      this.productForm = this.formBuilder.group({
+        name: ['',Validators.required],
+        category: ['',Validators.required],
+        totalStock: ['',Validators.required],
+        pricePerPc: ['',Validators.required],
+        srpPerPc: ['',Validators.required],
+        expiryDate: ['',Validators.required]
+      });
 
     if(this.editData) {
       this.productForm.controls['category'].disable();
       this.actionBtn = "Update";
+      this.productFormTitle = "UPDATE PRODUCT"
       this.productForm.controls['name'].setValue(this.editData.name);
       this.productForm.controls['category'].setValue(this.editData.plainClassificationDto.id);
       this.productForm.controls['totalStock'].setValue(this.editData.totalStock);
@@ -44,7 +46,7 @@ export class DialogComponent implements OnInit {
     this.productService.setCategory(JSON.stringify(this.productForm.get('category')!.value));
     if(!this.editData){
       if(this.productForm.valid) {
-        this.productService.postProduct(this.productForm.value)
+        this.productService.addProduct(this.productForm.value)
           .subscribe({
             next:(res)=>{
               alert("Product added succesfully!");
@@ -62,7 +64,7 @@ export class DialogComponent implements OnInit {
   }
 
   updateProduct() {
-    this.productService.putProduct(this.productForm.value, this.editData.id)
+    this.productService.updateProduct(this.productForm.value, this.editData.id)
     .subscribe({
       next:(res)=>{
         alert("Product Updated Successfully!");
