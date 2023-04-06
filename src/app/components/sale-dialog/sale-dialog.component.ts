@@ -21,7 +21,7 @@ export class SaleDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.productSaleForm = this.formBuilder.group({
-      category:['',Validators.required],
+      classification:['',Validators.required],
       productName:['',Validators.required],
       price:['',Validators.required],
       srp:['',Validators.required],
@@ -29,11 +29,11 @@ export class SaleDialogComponent implements OnInit {
       transactionDate:['',Validators.required]
     })
 
-    this.productSaleForm.controls['category'].disable();
+    this.productSaleForm.controls['classification'].disable();
     this.productSaleForm.controls['productName'].disable();
     this.productSaleForm.controls['price'].disable();
     this.productSaleForm.controls['srp'].disable();
-    this.productSaleForm.controls['category'].setValue(this.saleData.plainClassificationDto.name);
+    this.productSaleForm.controls['classification'].setValue(this.saleData.plainClassificationDto.name);
     this.productSaleForm.controls['productName'].setValue(this.saleData.name);
     this.productSaleForm.controls['price'].setValue(this.saleData.pricePerPc);
     this.productSaleForm.controls['srp'].setValue(this.saleData.srpPerPc);
@@ -41,7 +41,7 @@ export class SaleDialogComponent implements OnInit {
   }
 
   sellProduct() {
-    this.productSaleForm.controls['category'].enable();
+    this.productSaleForm.controls['classification'].enable();
     this.productSaleForm.controls['productName'].enable();
     this.productSaleForm.controls['price'].enable();
     this.productSaleForm.controls['srp'].enable();
