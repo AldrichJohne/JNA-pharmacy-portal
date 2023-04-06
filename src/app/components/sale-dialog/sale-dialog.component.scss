@@ -1,3 +1,9 @@
 mat-form-field{
   width: 100%;
 }
+
+/* Hide the transaction date form control */
+mat-form-field[formControlName="transactionDate"] {
+  display: none;
+}
+

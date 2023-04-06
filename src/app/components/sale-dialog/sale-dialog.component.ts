@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import {FormGroup, FormBuilder, Validators, FormControl} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sale-dialog',
@@ -26,7 +27,8 @@ export class SaleDialogComponent implements OnInit {
       price:['',Validators.required],
       srp:['',Validators.required],
       soldQuantity:['',Validators.required],
-      transactionDate:['',Validators.required]
+      transactionDateTemp:['',Validators.required],
+      transactionDate:['']
     })
 
     this.productSaleForm.controls['classification'].disable();
@@ -37,18 +39,22 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['productName'].setValue(this.saleData.name);
     this.productSaleForm.controls['price'].setValue(this.saleData.pricePerPc);
     this.productSaleForm.controls['srp'].setValue(this.saleData.srpPerPc);
-    this.productSaleForm.controls['transactionDate'].setValue(this.currentDate);
+    this.productSaleForm.controls['transactionDateTemp'].setValue(this.currentDate);
+    this.productSaleForm.controls['transactionDate'].disable();
   }
 
   sellProduct() {
+    this.productSaleForm.controls['transactionDate'].enable();
     this.productSaleForm.controls['classification'].enable();
     this.productSaleForm.controls['productName'].enable();
     this.productSaleForm.controls['price'].enable();
     this.productSaleForm.controls['srp'].enable();
-    console.log(this.productSaleForm.value);
+    const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
+    this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
+    this.productSaleForm.controls['transactionDateTemp'].disable();
     this.productService.productSale(this.productSaleForm.value, this.saleData.id)
       .subscribe({
-        next:(res)=>{
+        next:()=>{
           alert("Product Sell Success!");
           this.productSaleForm.reset();
           this.dialogRef.close('sale');
