@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dialog',
@@ -26,7 +27,8 @@ export class DialogComponent implements OnInit {
         totalStock: ['',Validators.required],
         pricePerPc: ['',Validators.required],
         srpPerPc: ['',Validators.required],
-        expiryDate: ['',Validators.required]
+        expiryDateTemp: ['',Validators.required],
+        expiryDate:['']
       });
 
     if(this.editData) {
@@ -38,17 +40,22 @@ export class DialogComponent implements OnInit {
       this.productForm.controls['totalStock'].setValue(this.editData.totalStock);
       this.productForm.controls['pricePerPc'].setValue(this.editData.pricePerPc);
       this.productForm.controls['srpPerPc'].setValue(this.editData.srpPerPc);
-      this.productForm.controls['expiryDate'].setValue(this.editData.expiryDate);
+      this.productForm.controls['expiryDateTemp'].setValue(this.editData.expiryDate);
+      this.productForm.controls['expiryDate'].disable();
     }
   }
 
   addProduct() {
+    this.productForm.controls['expiryDate'].enable();
+    const convertedExpiryDate = moment(this.productForm.value.expiryDateTemp).format('YYYY-MM-DD');
+    this.productForm.patchValue({ expiryDate: convertedExpiryDate });
+    this.productForm.controls['expiryDateTemp'].disable();
     this.productService.setCategory(JSON.stringify(this.productForm.get('category')!.value));
     if(!this.editData){
       if(this.productForm.valid) {
         this.productService.addProduct(this.productForm.value)
           .subscribe({
-            next:(res)=>{
+            next:()=>{
               alert("Product added succesfully!");
               this.productForm.reset();
               this.dialogRef.close('save');
@@ -66,7 +73,7 @@ export class DialogComponent implements OnInit {
   updateProduct() {
     this.productService.updateProduct(this.productForm.value, this.editData.id)
     .subscribe({
-      next:(res)=>{
+      next:()=>{
         alert("Product Updated Successfully!");
         this.productForm.reset();
         this.dialogRef.close('update');
