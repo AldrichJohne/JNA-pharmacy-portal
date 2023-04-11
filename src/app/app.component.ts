@@ -63,7 +63,7 @@ export class AppComponent implements OnInit{
         this.dataSourceProducts.paginator = this.paginator;
         this.dataSourceProducts.sort = this.sort;
       },
-      error:(err)=>{
+      error:()=>{
         alert("Error While Fetching The Products!")
       }
     })
@@ -77,7 +77,7 @@ export class AppComponent implements OnInit{
           this.dataSourceProducts.paginator = this.paginator;
           this.dataSourceProducts.sort = this.sort;
         },
-        error:(err)=>{
+        error:()=>{
           alert("Error While Fetching The Product Sales")
         }
       })
@@ -105,10 +105,10 @@ export class AppComponent implements OnInit{
     })
   }
 
-  deleteProduct(id:number){
+  deleteProduct(id : number){
     return this.productService.deleteProduct(id)
     .subscribe({
-      next: (res) => {
+      next: () => {
         alert("Product Deleted Successfully!")
         this.getAllProductList();
       },
@@ -119,12 +119,21 @@ export class AppComponent implements OnInit{
     })
   }
 
-  applyFilter(event: Event) {
+  applyFilterProducts(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSourceProducts.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSourceProducts.paginator) {
       this.dataSourceProducts.paginator.firstPage();
+    }
+  }
+
+  applyFilterSales(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceSales.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceSales.paginator) {
+      this.dataSourceSales.paginator.firstPage();
     }
   }
 }
