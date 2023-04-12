@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ProductService } from 'src/app/services/product.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
+import {CashierService} from "../../services/cashier.service";
 
 @Component({
   selector: 'app-sale-dialog',
@@ -12,11 +12,11 @@ import * as moment from 'moment';
 export class SaleDialogComponent implements OnInit {
 
   productSaleForm!: FormGroup;
-  productSaleFormTitle: string = "SALE"
+  productSaleFormTitle: string = "SELL"
   currentDate = new Date();
 
   constructor(private formBuilder : FormBuilder,
-              private productService: ProductService,
+              private cashierService: CashierService,
               @Inject(MAT_DIALOG_DATA) public saleData : any,
               private dialogRef : MatDialogRef<SaleDialogComponent>) { }
 
@@ -52,7 +52,7 @@ export class SaleDialogComponent implements OnInit {
     const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
     this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
     this.productSaleForm.controls['transactionDateTemp'].disable();
-    this.productService.productSale(this.productSaleForm.value, this.saleData.id)
+    this.cashierService.productSale(this.productSaleForm.value, this.saleData.id)
       .subscribe({
         next:()=>{
           alert("Product Sell Success!");

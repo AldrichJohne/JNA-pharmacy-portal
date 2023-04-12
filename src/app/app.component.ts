@@ -9,6 +9,7 @@ import {SaleDialogComponent} from "./components/sale-dialog/sale-dialog.componen
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as moment from 'moment';
 import {SaleReportsService} from "./services/sale-reports.service";
+import {CashierService} from "./services/cashier.service";
 
 @Component({
   selector: 'app-root',
@@ -32,6 +33,7 @@ export class AppComponent implements OnInit{
 
   constructor(private dialog : MatDialog,
               private productService: ProductService,
+              private cashierService: CashierService,
               private formBuilder : FormBuilder,
               private reportService: SaleReportsService) {
   }
@@ -82,7 +84,7 @@ export class AppComponent implements OnInit{
   }
 
   getAllSales() {
-    this.productService.getProductSales()
+    this.cashierService.getProductSales()
       .subscribe({
         next:(res)=>{
           this.dataSourceSales = new MatTableDataSource(res);
