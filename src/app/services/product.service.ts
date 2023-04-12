@@ -34,12 +34,4 @@ export class ProductService {
     return this.http.delete<any>(this.baseUrl + '/products/' + id)
   }
 
-  productSale(data : any, id : number) {
-    return this.http.post(this.baseUrl + '/product/sale/' + id, data)
-  }
-
-  getProductSales() {
-    return this.http.get<any>(this.baseUrl + '/products/sale')
-  }
-
 }

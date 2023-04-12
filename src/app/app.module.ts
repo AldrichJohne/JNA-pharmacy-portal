@@ -25,6 +25,8 @@ import { SaleDialogComponent } from './components/sale-dialog/sale-dialog.compon
 import {MatCardModule} from '@angular/material/card';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -54,7 +56,9 @@ import {MatListModule} from '@angular/material/list';
     MatTabsModule,
     MatCardModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    MatCheckboxModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

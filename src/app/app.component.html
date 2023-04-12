@@ -2,7 +2,7 @@
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>store</mat-icon>
   </button>
-  <span>JNA Pharmacy & <mat-icon>pets</mat-icon> Happy </span>
+  <span>JNA Pharmacy & Happy <mat-icon>pets</mat-icon></span>
   <span class="example-spacer"></span>
 </mat-toolbar>
 
@@ -11,7 +11,7 @@
     <div class="productsContainer">
       <div style="margin-top: 10px">
         <mat-list>
-          <button mat-raised-button color="basic" (click)="openProductDialog()">ADD PRODUCT<mat-icon>add</mat-icon></button>
+          <button mat-raised-button color="primary" (click)="openProductDialog()">ADD PRODUCT<mat-icon>add</mat-icon></button>
           <mat-divider class="addFilterDivider"></mat-divider>
           <mat-form-field appearance="standard" class="filterBox">
             <mat-label>Filter</mat-label>
@@ -176,6 +176,12 @@
             <ng-container matColumnDef="profit">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Profit </th>
               <td mat-cell *matCellDef="let row"> {{row.profit | currency:'PHP'}} </td>
+            </ng-container>
+
+            <!-- isDiscounted -->
+            <ng-container matColumnDef="discounted">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Discounted </th>
+              <td mat-cell *matCellDef="let row"> {{row.isDiscounted}} </td>
             </ng-container>
 
             <!-- transaction date column -->
