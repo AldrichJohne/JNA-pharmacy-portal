@@ -56,7 +56,7 @@ export class DialogComponent implements OnInit {
         this.productService.addProduct(this.productForm.value)
           .subscribe({
             next:()=>{
-              alert("Product added succesfully!");
+              alert("Product added successfully!");
               this.productForm.reset();
               this.dialogRef.close('save');
             },

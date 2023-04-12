@@ -22,6 +22,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTabsModule} from '@angular/material/tabs';
 import { SaleDialogComponent } from './components/sale-dialog/sale-dialog.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,10 @@ import { SaleDialogComponent } from './components/sale-dialog/sale-dialog.compon
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCardModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
