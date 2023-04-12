@@ -15,6 +15,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-label>Discounted?</mat-label>
+          <mat-select formControlName="discountSwitch" placeholder="is this discounted?">
+            <mat-option [value]="false">False</mat-option>
+            <mat-option [value]="true">True</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
             <mat-label>Category</mat-label>
             <input formControlName="classification" matInput>
         </mat-form-field>

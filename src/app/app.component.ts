@@ -24,7 +24,7 @@ export class AppComponent implements OnInit{
   reportProfitValue: string = "";
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'classification', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'action'];
-  displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','transactionDate'];
+  displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','discounted','transactionDate'];
   dataSourceProducts!: MatTableDataSource<any>;
   dataSourceSales!: MatTableDataSource<any>;
   @ViewChild('productsPaginator') productsPaginator!: MatPaginator;

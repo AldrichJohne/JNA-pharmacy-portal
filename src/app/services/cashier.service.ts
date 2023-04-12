@@ -9,8 +9,9 @@ export class CashierService {
 
   constructor(private http : HttpClient) { }
 
-  productSale(data : any, id : number) {
-    return this.http.post(this.baseUrl + '/product/sell/' + id, data)
+  productSale(data : any, id : number, discountSwitch: any) {
+    const params = { discountSwitch };
+    return this.http.post(this.baseUrl + '/product/sell/' + id, data, {params})
   }
 
   getProductSales() {
