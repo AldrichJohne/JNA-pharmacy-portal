@@ -63,6 +63,10 @@ export class SaleDialogComponent implements OnInit {
   }
 
   private readyFields() {
+    if (this.saleData.plainClassificationDto.name !== 'generics') {
+      this.productSaleForm.controls['discountSwitch'].setValue(false);
+      this.productSaleForm.controls['discountSwitch'].disable();
+    }
     this.productSaleForm.controls['classification'].disable();
     this.productSaleForm.controls['productName'].disable();
     this.productSaleForm.controls['price'].disable();
@@ -73,6 +77,7 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['srp'].setValue(this.saleData.srpPerPc);
     this.productSaleForm.controls['transactionDateTemp'].setValue(this.currentDate);
     this.productSaleForm.controls['transactionDate'].disable();
+    this.productSaleForm.controls['discountSwitch'].setValue(false);
   }
 
   private enableRequiredFields() {

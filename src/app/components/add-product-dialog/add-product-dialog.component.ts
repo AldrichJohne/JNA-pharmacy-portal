@@ -6,10 +6,10 @@ import * as moment from 'moment';
 
 @Component({
   selector: 'app-dialog',
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss']
+  templateUrl: './add-product-dialog.component.html',
+  styleUrls: ['./add-product-dialog.component.scss']
 })
-export class DialogComponent implements OnInit {
+export class AddProductDialogComponent implements OnInit {
 
   productForm!: FormGroup;
   actionBtn: string = "Save"
@@ -18,7 +18,7 @@ export class DialogComponent implements OnInit {
   constructor(private formBuilder : FormBuilder,
               private productService: ProductService,
               @Inject(MAT_DIALOG_DATA) public editData : any,
-              private dialogRef : MatDialogRef<DialogComponent>) { }
+              private dialogRef : MatDialogRef<AddProductDialogComponent>) { }
 
   ngOnInit(): void {
       this.productForm = this.formBuilder.group({
