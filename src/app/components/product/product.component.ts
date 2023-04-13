@@ -59,7 +59,7 @@ export class ProductComponent implements OnInit {
 
   openDeletePrompt(row : any) {
     this.dialog.open(DeletePromptComponent, {
-      width: '25%',
+      width: '20%',
       data: row
     }).afterClosed().subscribe(val => {
       this.getAllProductList();
