@@ -29,7 +29,7 @@ table {
 }
 
 .dateRangeReportForm {
-  width: 40%;
+  width: 100%;
 }
 
 .chooseDate {
@@ -38,6 +38,7 @@ table {
 
 .report {
   margin: 10px 10px 10px 10px;
+  width: 25%;
 }
 
 .reportCard {
@@ -55,6 +56,23 @@ table {
 .addFilterDivider {
   width: 25%;
   margin-top: 5px;
+}
+
+.report-by-class-card {
+  display: flex;
+}
+
+.report-by-class-cards {
+  width: 20%;
+}
+
+.report-button{
+  display: flex;
+  margin: 10px 10px 10px 10px;
+}
+
+.report-button-clear{
+  margin-left: 150px;
 }
 
 

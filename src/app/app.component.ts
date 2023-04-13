@@ -19,9 +19,19 @@ import {CashierService} from "./services/cashier.service";
 export class AppComponent implements OnInit{
   title = 'product-system-v1';
   dateRangeReportForm!: FormGroup;
-  reportDateRangeValue: string = "";
-  reportGrossValue: string = "";
-  reportProfitValue: string = "";
+  reportDateRangeValue: string = "MMM-DD-YYYY - MMM-DD-YYYY";
+  reportGrossValue: string = "0.00";
+  reportProfitValue: string = "0.00";
+  brandedGross: string = "0.00";
+  genericsGross: string = "0.00";
+  galenicalsGross: string = "0.00";
+  iceCreamGross: string = "0.00";
+  othersGross: string = "0.00";
+  brandedProfit: string = "0.00";
+  genericsProfit: string = "0.00";
+  galenicalsProfit: string = "0.00";
+  iceCreamProfit: string = "0.00";
+  othersProfit: string = "0.00";
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'classification', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'action'];
   displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','discounted','transactionDate'];
@@ -144,6 +154,7 @@ export class AppComponent implements OnInit{
           this.reportGrossValue = res.gross;
           this.reportProfitValue = res.profit;
           this.dateRangeReportForm.reset();
+          this.setUpReport(res);
         },
         error:()=>{
           alert("Error while fetching reports by given date range: " + convertedStartDate + " to " + convertedEndDate);
@@ -151,6 +162,45 @@ export class AppComponent implements OnInit{
       }
     )
   }
+
+  reportClearAllCards() {
+    this.reportDateRangeValue = "MMM-DD-YYYY - MMM-DD-YYYY";
+    this.reportGrossValue = "0.00";
+    this.reportProfitValue = "0.00";
+    this.brandedGross = "0.00";
+    this.genericsGross = "0.00";
+    this.galenicalsGross = "0.00";
+    this.iceCreamGross = "0.00";
+    this.othersGross = "0.00";
+    this.brandedProfit = "0.00";
+    this.genericsProfit = "0.00";
+    this.galenicalsProfit = "0.00";
+    this.iceCreamProfit = "0.00";
+    this.othersProfit = "0.00";
+  }
+
+  private setUpReport(res: any): void {
+    const { breakdown } = res;
+    const [
+      { gross: brandedGross, profit: brandedProfit },
+      { gross: genericsGross, profit: genericsProfit },
+      { gross: galenicalsGross, profit: galenicalsProfit },
+      { gross: iceCreamGross, profit: iceCreamProfit },
+      { gross: othersGross, profit: othersProfit }
+    ] = breakdown;
+
+    this.brandedGross = brandedGross;
+    this.genericsGross = genericsGross;
+    this.galenicalsGross = galenicalsGross;
+    this.iceCreamGross = iceCreamGross;
+    this.othersGross = othersGross;
+    this.brandedProfit = brandedProfit;
+    this.genericsProfit = genericsProfit;
+    this.galenicalsProfit = galenicalsProfit;
+    this.iceCreamProfit = iceCreamProfit;
+    this.othersProfit = othersProfit;
+  }
+
 
   applyFilterProducts(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
