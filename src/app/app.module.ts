@@ -9,7 +9,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
@@ -27,12 +27,20 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
+import { VersionDisplayComponent } from './components/version-display/version-display.component';
+import { SaleComponent } from './components/sale/sale.component';
+import { ReportComponent } from './components/report/report.component';
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogComponent,
-    SaleDialogComponent
+    AddProductDialogComponent,
+    SaleDialogComponent,
+    VersionDisplayComponent,
+    SaleComponent,
+    ReportComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
