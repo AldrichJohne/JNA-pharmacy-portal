@@ -1,0 +1,113 @@
+<div style="margin-top: 10px">
+    <mat-list>
+      <button mat-raised-button color="primary" (click)="openProductDialog()">ADD PRODUCT<mat-icon>add</mat-icon></button>
+      <mat-divider class="addFilterDivider"></mat-divider>
+      <mat-form-field appearance="standard" class="filterBox">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilterProducts($event)" placeholder="Ex. Symdex" #productFilterInput>
+      </mat-form-field>
+    </mat-list>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSourceProducts" matSort>
+
+        <!-- cashier  -->
+        <ng-container matColumnDef="cashier">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Cashier </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="openSalesDialog(row)" color="accent">
+              <mat-icon> local_grocery_store</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+
+        <!-- classification -->
+        <ng-container matColumnDef="classification">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Class </th>
+          <td mat-cell *matCellDef="let row"> {{row.plainClassificationDto.name}} </td>
+        </ng-container>
+
+        <!-- remaining stock -->
+        <ng-container matColumnDef="remainingStock">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Remaining Stocks </th>
+          <td mat-cell *matCellDef="let row"> {{row.remainingStock}} </td>
+        </ng-container>
+
+        <!-- total stock -->
+        <ng-container matColumnDef="totalStock">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Stocks </th>
+          <td mat-cell *matCellDef="let row"> {{row.totalStock}} </td>
+        </ng-container>
+
+        <!-- sold -->
+        <ng-container matColumnDef="sold">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Sold </th>
+          <td mat-cell *matCellDef="let row"> {{row.sold}} </td>
+        </ng-container>
+
+        <!-- price -->
+        <ng-container matColumnDef="pricePerPc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+          <td mat-cell *matCellDef="let row"> {{row.pricePerPc | currency:'PHP'}} </td>
+        </ng-container>
+
+        <!-- srp -->
+        <ng-container matColumnDef="srpPerPc">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> SRP </th>
+          <td mat-cell *matCellDef="let row"> {{row.srpPerPc | currency:'PHP'}} </td>
+        </ng-container>
+
+        <!-- remaining price -->
+        <ng-container matColumnDef="totalPriceRemaining">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Price Remaining </th>
+          <td mat-cell *matCellDef="let row"> {{row.totalPriceRemaining | currency:'PHP'}} </td>
+        </ng-container>
+
+        <!-- price sold -->
+        <ng-container matColumnDef="totalPriceSold">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Price Sold </th>
+          <td mat-cell *matCellDef="let row"> {{row.totalPriceSold | currency:'PHP'}} </td>
+        </ng-container>
+
+        <!-- profit  -->
+        <ng-container matColumnDef="profit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Profit </th>
+          <td mat-cell *matCellDef="let row"> {{row.profit | currency:'PHP'}} </td>
+        </ng-container>
+
+        <!-- expiry date column -->
+        <ng-container matColumnDef="expiryDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.expiryDate}} </td>
+        </ng-container>
+
+        <!-- action column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="editProduct(row)" color="primary">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button (click)="deleteProduct(row.id)" color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsProducts"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsProducts;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{productFilterInput.value}}"</td>
+        </tr>
+      </table>
+      <mat-paginator #productsPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page" [showFirstLastButtons]="true"></mat-paginator>
+    </div>
+</div>
