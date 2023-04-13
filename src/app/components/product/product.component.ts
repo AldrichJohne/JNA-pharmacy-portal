@@ -7,6 +7,7 @@ import {SaleDialogComponent} from "../sale-dialog/sale-dialog.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {CashierService} from "../../services/cashier.service";
+import {DeletePromptComponent} from "../delete-prompt/delete-prompt.component";
 
 @Component({
   selector: 'app-product',
@@ -21,8 +22,7 @@ export class ProductComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private dialog : MatDialog,
-              private productService: ProductService,
-              private cashierService: CashierService) {
+                private productService: ProductService) {
   }
 
   ngOnInit(): void {
@@ -53,9 +53,16 @@ export class ProductComponent implements OnInit {
       width:'50%',
       data:row
     }).afterClosed().subscribe(val => {
-      if(val==='sale'){
         this.getAllProductList();
-      }
+    })
+  }
+
+  openDeletePrompt(row : any) {
+    this.dialog.open(DeletePromptComponent, {
+      width: '20%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      this.getAllProductList();
     })
   }
 

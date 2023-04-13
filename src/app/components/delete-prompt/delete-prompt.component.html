@@ -1,0 +1,5 @@
+<h1 mat-dialog-title><mat-icon>settings</mat-icon> Are you sure you want to delete {{productName}}?</h1>
+<div mat-dialog-action class="delete-prompt">
+  <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+  <button class="delete-btn" mat-raised-button color="primary" (click)="continueDelete()">Delete</button>
+</div>
