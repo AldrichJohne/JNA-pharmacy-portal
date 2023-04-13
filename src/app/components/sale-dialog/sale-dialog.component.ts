@@ -86,5 +86,6 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['productName'].enable();
     this.productSaleForm.controls['price'].enable();
     this.productSaleForm.controls['srp'].enable();
+    this.productSaleForm.controls['discountSwitch'].enable();
   }
 }

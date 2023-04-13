@@ -1,8 +1,12 @@
 <div style="margin-top: 10px">
-  <mat-form-field appearance="standard" class="filterBox">
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilterSales($event)" placeholder="Ex. Symdex" #saleFilterInput>
-  </mat-form-field>
+  <mat-list>
+    <button mat-raised-button color="primary" (click)="getAllSales()">REFRESH TABLE<mat-icon>refresh</mat-icon></button>
+    <mat-divider class="addFilterDivider"></mat-divider>
+    <mat-form-field appearance="standard" class="filterBox">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilterSales($event)" placeholder="Ex. Symdex" #saleFilterInput>
+    </mat-form-field>
+  </mat-list>
 
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSourceSales" matSort>
