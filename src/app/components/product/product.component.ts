@@ -6,7 +6,6 @@ import {ProductService} from "../../services/product.service";
 import {SaleDialogComponent} from "../sale-dialog/sale-dialog.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {SaleComponent} from "../sale/sale.component";
 import {CashierService} from "../../services/cashier.service";
 
 @Component({
