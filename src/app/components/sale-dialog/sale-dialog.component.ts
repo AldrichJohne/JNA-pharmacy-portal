@@ -14,6 +14,7 @@ export class SaleDialogComponent implements OnInit {
   productSaleForm!: FormGroup;
   productSaleFormTitle: string = "SELL"
   currentDate = new Date();
+  disableSellButton = false;
 
   constructor(private formBuilder : FormBuilder,
               private cashierService: CashierService,
@@ -35,37 +36,51 @@ export class SaleDialogComponent implements OnInit {
   }
 
   sellProduct() {
-    this.enableRequiredFields();
-    const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
-    const discountSwitch = this.productSaleForm.controls['discountSwitch'].value;
-    this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
-    this.productSaleForm.controls['transactionDateTemp'].disable();
-    this.productSaleForm.controls['discountSwitch'].disable();
+    if (this.productSaleForm.controls['soldQuantity'].value > +this.saleData.remainingStock) {
+      alert('You cannot sell more that what is remaining');
+      this.productSaleForm.reset();
+      this.dialogRef.close();
+    } else {
+      console.log(this.productSaleForm.controls['soldQuantity'].value)
+      console.log(this.saleData.remainingStock)
+      this.enableRequiredFields();
+      const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
+      const discountSwitch = this.productSaleForm.controls['discountSwitch'].value;
+      this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
+      this.productSaleForm.controls['transactionDateTemp'].disable();
+      this.productSaleForm.controls['discountSwitch'].disable();
 
-    this.cashierService.productSale(
-      this.productSaleForm.value,
-      this.saleData.id,
-      discountSwitch)
-      .subscribe({
-        next:()=>{
-          alert("Product Sell Success!");
-          this.productSaleForm.reset();
-          this.dialogRef.close('sale');
-        },
-        error:()=>{
-          alert("You must fill out required fields");
-          this.readyFields();
-          this.productSaleForm.controls['transactionDateTemp'].enable();
-          this.productSaleForm.controls['discountSwitch'].enable();
+      this.cashierService.productSale(
+        this.productSaleForm.value,
+        this.saleData.id,
+        discountSwitch)
+        .subscribe({
+          next:()=>{
+            alert("Product Sell Success!");
+            this.productSaleForm.reset();
+            this.dialogRef.close('sale');
+          },
+          error:()=>{
+            alert("You must fill out required fields");
+            this.readyFields();
+            this.productSaleForm.controls['transactionDateTemp'].enable();
+            this.productSaleForm.controls['discountSwitch'].enable();
 
-        }
-      })
+          }
+        })
+    }
   }
 
   private readyFields() {
     if (this.saleData.plainClassificationDto.name !== 'generics') {
       this.productSaleForm.controls['discountSwitch'].setValue(false);
       this.productSaleForm.controls['discountSwitch'].disable();
+    }
+    if (this.saleData.remainingStock <= 0) {
+      this.productSaleFormTitle = 'THIS PRODUCT IS OUT OF STOCK'
+      this.disableSellButton = true;
+      this.productSaleForm.controls['soldQuantity'].disable();
+      this.productSaleForm.controls['transactionDateTemp'].disable();
     }
     this.productSaleForm.controls['classification'].disable();
     this.productSaleForm.controls['productName'].disable();
@@ -88,4 +103,5 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['srp'].enable();
     this.productSaleForm.controls['discountSwitch'].enable();
   }
+
 }
