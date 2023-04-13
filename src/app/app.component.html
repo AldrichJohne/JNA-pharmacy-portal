@@ -220,6 +220,11 @@
             <mat-date-range-picker #reportDatePicker></mat-date-range-picker>
           </mat-form-field>
 
+          <div class="report-button">
+            <button mat-raised-button color="basic" (click)="findReportRecord()">SEARCH</button>
+            <button mat-raised-button color="basic" (click)="reportClearAllCards()" class="report-button-clear">CLEAR</button>
+          </div>
+
           <mat-card class="reportCard">
             <mat-card-title class="reportTitle">Date: {{ reportDateRangeValue }}</mat-card-title>
             <mat-card-content>
@@ -228,10 +233,46 @@
             </mat-card-content>
           </mat-card>
 
-          <div class="report">
-            <button mat-raised-button color="basic" (click)="findReportRecord()">SEARCH</button>
-          </div>
-
+          <mat-card class="reportCard">
+            <mat-card-title class="reportTitle">Break Down</mat-card-title>
+            <div class="report-by-class-card">
+              <mat-card class="report-by-class-cards">
+                <mat-card-title class="reportTitle">Branded</mat-card-title>
+                <mat-card-content>
+                  <p>Gross: {{ brandedGross | currency:'PHP'}}</p>
+                  <p>Profit: {{ brandedProfit | currency:'PHP'}}</p>
+                </mat-card-content>
+              </mat-card>
+              <mat-card class="report-by-class-cards">
+                <mat-card-title class="reportTitle">Generics</mat-card-title>
+                <mat-card-content>
+                  <p>Gross: {{ genericsGross | currency:'PHP'}}</p>
+                  <p>Profit: {{ genericsProfit | currency:'PHP'}}</p>
+                </mat-card-content>
+              </mat-card>
+              <mat-card class="report-by-class-cards">
+                <mat-card-title class="reportTitle">Galenicals</mat-card-title>
+                <mat-card-content>
+                  <p>Gross: {{ galenicalsGross | currency:'PHP'}}</p>
+                  <p>Profit: {{ galenicalsProfit | currency:'PHP'}}</p>
+                </mat-card-content>
+              </mat-card>
+              <mat-card class="report-by-class-cards">
+                <mat-card-title class="reportTitle">Ice Cream</mat-card-title>
+                <mat-card-content>
+                  <p>Gross: {{ iceCreamGross | currency:'PHP'}}</p>
+                  <p>Profit: {{ iceCreamProfit | currency:'PHP'}}</p>
+                </mat-card-content>
+              </mat-card>
+              <mat-card class="report-by-class-cards">
+                <mat-card-title class="reportTitle">Others</mat-card-title>
+                <mat-card-content>
+                  <p>Gross: {{ othersGross | currency:'PHP'}}</p>
+                  <p>Profit: {{ othersProfit | currency:'PHP'}}</p>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </mat-card>
         </div>
       </form>
     </div>
