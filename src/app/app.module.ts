@@ -31,6 +31,7 @@ import { VersionDisplayComponent } from './components/version-display/version-di
 import { SaleComponent } from './components/sale/sale.component';
 import { ReportComponent } from './components/report/report.component';
 import { ProductComponent } from './components/product/product.component';
+import { DeletePromptComponent } from './components/delete-prompt/delete-prompt.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ProductComponent } from './components/product/product.component';
     VersionDisplayComponent,
     SaleComponent,
     ReportComponent,
-    ProductComponent
+    ProductComponent,
+    DeletePromptComponent
   ],
   imports: [
     BrowserModule,
