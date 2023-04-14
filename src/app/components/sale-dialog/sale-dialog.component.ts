@@ -34,7 +34,8 @@ export class SaleDialogComponent implements OnInit {
       soldQuantity:['',Validators.required],
       transactionDateTemp:['',Validators.required],
       transactionDate:[''],
-      discountSwitch:['',Validators.required]
+      discountSwitch:['',Validators.required],
+      productId:['', Validators.required]
     })
     this.readyFields();
   }
@@ -45,9 +46,8 @@ export class SaleDialogComponent implements OnInit {
       this.productSaleForm.reset();
       this.dialogRef.close();
     } else {
-      console.log(this.productSaleForm.controls['soldQuantity'].value)
-      console.log(this.saleData.remainingStock)
       this.enableRequiredFields();
+      this.productSaleForm.controls['productId'].setValue(this.saleData.id);
       const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
       const discountSwitch = this.productSaleForm.controls['discountSwitch'].value;
       this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
@@ -101,6 +101,7 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['transactionDateTemp'].setValue(this.currentDate);
     this.productSaleForm.controls['transactionDate'].disable();
     this.productSaleForm.controls['discountSwitch'].setValue(false);
+    this.productSaleForm.controls['productId'].disable();
   }
 
   private enableRequiredFields() {
@@ -110,6 +111,8 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['price'].enable();
     this.productSaleForm.controls['srp'].enable();
     this.productSaleForm.controls['discountSwitch'].enable();
+    this.productSaleForm.controls['productId'].enable();
+
   }
 
   openNotifyDialog() {
