@@ -122,18 +122,42 @@ export class ProductComponent implements OnInit {
       const currentDate = new Date();
       const timeDiff = givenExpiryDate.getTime() - currentDate.getTime();
       const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      row.expiryStatus = daysDiff.toString();
-      if (+row.expiryStatus <= 0) {
-        row.expiryStatus = 'Expired'
+      row.expiryStatus = this.convertExpiryStatus(daysDiff);
+      if (daysDiff <= 0) {
         row.disableCashier = true;
       }
-      if (+row.remainingStock <= 0) {
+      if (row.remainingStock <= 0) {
         row.disableCashier = true;
       }
     }
-
   }
 
-
+  convertExpiryStatus(expiryStatus: number): string {
+    let result = '';
+    if (expiryStatus <= 0) {
+      result = 'Expired';
+    } else if (expiryStatus < 30) {
+      result = `${expiryStatus} day${expiryStatus > 1 ? 's' : ''}`;
+    } else if (expiryStatus < 365) {
+      const months = Math.floor(expiryStatus / 30);
+      const days = expiryStatus % 30;
+      result = `${months} month${months > 1 ? 's' : ''}`;
+      if (days > 0) {
+        result += `, ${days} day${days > 1 ? 's' : ''}`;
+      }
+    } else {
+      const years = Math.floor(expiryStatus / 365);
+      const months = Math.floor((expiryStatus % 365) / 30);
+      const days = (expiryStatus % 365) % 30;
+      result = `${years} year${years > 1 ? 's' : ''}`;
+      if (months > 0) {
+        result += `, ${months} month${months > 1 ? 's' : ''}`;
+      }
+      if (days > 0) {
+        result += `, ${days} day${days > 1 ? 's' : ''}`;
+      }
+    }
+    return result;
+  }
 
 }
