@@ -18,8 +18,9 @@ export class ProductComponent implements OnInit {
 
   notifyMessage = '';
   notifyStatus = '';
+  disableCashier = false;
 
-  displayedColumnsProducts: string[] = ['cashier', 'name', 'classification', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'action'];
+  displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
   @ViewChild('productsPaginator') productsPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -87,6 +88,7 @@ export class ProductComponent implements OnInit {
           this.dataSourceProducts = new MatTableDataSource(res);
           this.dataSourceProducts.paginator = this.productsPaginator;
           this.dataSourceProducts.sort = this.sort;
+          this.checkProductStatus(res);
         },
         error:()=>{
           this.notifyMessage = 'Error While Fetching The Products';
@@ -113,5 +115,25 @@ export class ProductComponent implements OnInit {
       data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
     });
   }
+
+  checkProductStatus(response: any) {
+    for (const row of response) {
+      const givenExpiryDate = new Date(row.expiryDate);
+      const currentDate = new Date();
+      const timeDiff = givenExpiryDate.getTime() - currentDate.getTime();
+      const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      row.expiryStatus = daysDiff.toString();
+      if (+row.expiryStatus <= 0) {
+        row.expiryStatus = 'Expired'
+        row.disableCashier = true;
+      }
+      if (+row.remainingStock <= 0) {
+        row.disableCashier = true;
+      }
+    }
+
+  }
+
+
 
 }
