@@ -16,7 +16,7 @@ export class SaleComponent implements OnInit {
   notifyMessage = '';
   notifyStatus = '';
 
-  displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','discounted','transactionDate'];
+  displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate'];
   dataSourceSales!: MatTableDataSource<any>;
   @ViewChild('salesPaginator') salesPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -35,10 +35,12 @@ export class SaleComponent implements OnInit {
           this.dataSourceSales = new MatTableDataSource(res);
           this.dataSourceSales.paginator = this.salesPaginator;
           this.dataSourceSales.sort = this.sort;
+          console.log(res)
         },
         error:()=>{
           this.notifyMessage = 'Error While Fetching The Product Sales';
           this.notifyStatus = 'ERROR';
+          this.openNotifyDialog();
         }
       })
   }
@@ -52,7 +54,7 @@ export class SaleComponent implements OnInit {
     }
   }
 
-  OpenNotifyDialog() {
+  openNotifyDialog() {
     this.dialog.open(NotifPromptComponent, {
       width: '20%',
       data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
