@@ -5,6 +5,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
 import {MatDialog} from "@angular/material/dialog";
+import {DeletePromptComponent} from "../delete-prompt/delete-prompt.component";
+import {DeletePromptSaleComponent} from "../delete-prompt-sale/delete-prompt-sale.component";
 
 @Component({
   selector: 'app-sale',
@@ -16,7 +18,7 @@ export class SaleComponent implements OnInit {
   notifyMessage = '';
   notifyStatus = '';
 
-  displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate'];
+  displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate', 'action'];
   dataSourceSales!: MatTableDataSource<any>;
   @ViewChild('salesPaginator') salesPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -59,6 +61,15 @@ export class SaleComponent implements OnInit {
       width: '20%',
       data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
     });
+  }
+
+  openDeletePrompt(row : any) {
+    this.dialog.open(DeletePromptSaleComponent, {
+      width: '20%',
+      data: row
+    }).afterClosed().subscribe(val => {
+      this.getAllSales();
+    })
   }
 
 }

@@ -33,6 +33,7 @@ import { ReportComponent } from './components/report/report.component';
 import { ProductComponent } from './components/product/product.component';
 import { DeletePromptComponent } from './components/delete-prompt/delete-prompt.component';
 import { NotifPromptComponent } from './components/notif-prompt/notif-prompt.component';
+import { DeletePromptSaleComponent } from './components/delete-prompt-sale/delete-prompt-sale.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { NotifPromptComponent } from './components/notif-prompt/notif-prompt.com
     ReportComponent,
     ProductComponent,
     DeletePromptComponent,
-    NotifPromptComponent
+    NotifPromptComponent,
+    DeletePromptSaleComponent
   ],
   imports: [
     BrowserModule,

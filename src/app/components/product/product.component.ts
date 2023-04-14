@@ -93,7 +93,7 @@ export class ProductComponent implements OnInit {
         error:()=>{
           this.notifyMessage = 'Error While Fetching The Products';
           this.notifyStatus = 'ERROR';
-          this.OpenNotifyDialog();
+          this.openNotifyDialog();
         }
       })
   }
@@ -109,7 +109,7 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  OpenNotifyDialog() {
+  openNotifyDialog() {
     this.dialog.open(NotifPromptComponent, {
       width: '20%',
       data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }

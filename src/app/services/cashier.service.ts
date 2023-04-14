@@ -17,4 +17,8 @@ export class CashierService {
   getProductSales() {
     return this.http.get<any>(this.baseUrl + '/products/sell')
   }
+
+  deleteProductSoldRecord(id : number) {
+    return this.http.delete<any>(this.baseUrl + '/product/sell/' + id)
+  }
 }
