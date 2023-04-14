@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {VersionDisplayService} from "../../services/version-display.service";
+import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-version-display',
@@ -8,9 +10,12 @@ import {VersionDisplayService} from "../../services/version-display.service";
 })
 export class VersionDisplayComponent implements OnInit {
   applicationVersion: string = '';
+  notifyMessage = '';
+  notifyStatus = '';
 
   constructor(
-    private versionDisplayService: VersionDisplayService
+    private versionDisplayService: VersionDisplayService,
+    private dialog : MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -24,10 +29,19 @@ export class VersionDisplayComponent implements OnInit {
           this.applicationVersion = res.applicationVersion;
         },
         error:()=>{
-            alert('Error connecting to M=icorservice');
+            this.notifyMessage = 'Error connecting to Micorservice';
+            this.notifyStatus = 'ERROR';
+            this.OpenNotifyDialog();
         }
       }
     )
+  }
+
+  OpenNotifyDialog() {
+    this.dialog.open(NotifPromptComponent, {
+      width: '20%',
+      data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
   }
 
 }

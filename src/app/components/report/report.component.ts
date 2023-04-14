@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as moment from "moment";
 import {SaleReportsService} from "../../services/sale-reports.service";
+import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-report',
@@ -9,6 +11,9 @@ import {SaleReportsService} from "../../services/sale-reports.service";
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
+
+  notifyMessage = '';
+  notifyStatus = '';
 
   dateRangeReportForm!: FormGroup;
   reportDateRangeValue: string = "MMM-DD-YYYY - MMM-DD-YYYY";
@@ -26,7 +31,8 @@ export class ReportComponent implements OnInit {
   othersProfit: string = "0.00";
 
   constructor(private reportService: SaleReportsService,
-              private formBuilder : FormBuilder) { }
+              private formBuilder : FormBuilder,
+              private dialog : MatDialog) { }
 
   ngOnInit(): void {
     this.dateRangeReportForm = this.formBuilder.group({
@@ -49,7 +55,9 @@ export class ReportComponent implements OnInit {
           this.setUpReport(res);
         },
         error:()=>{
-          alert("Error while fetching reports by given date range: " + convertedStartDate + " to " + convertedEndDate);
+          this.notifyMessage = "Error Fetching Reports Date Range: " + convertedStartDate + " to " + convertedEndDate;
+          this.notifyStatus = 'ERROR';
+          this.OpenNotifyDialog();
         }
       }
     )
@@ -91,6 +99,13 @@ export class ReportComponent implements OnInit {
     this.galenicalsProfit = "0.00";
     this.iceCreamProfit = "0.00";
     this.othersProfit = "0.00";
+  }
+
+  OpenNotifyDialog() {
+    this.dialog.open(NotifPromptComponent, {
+      width: '20%',
+      data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
   }
 
 }

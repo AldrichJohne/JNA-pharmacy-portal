@@ -3,6 +3,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {CashierService} from "../../services/cashier.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-sale',
@@ -11,12 +13,16 @@ import {MatSort} from "@angular/material/sort";
 })
 export class SaleComponent implements OnInit {
 
+  notifyMessage = '';
+  notifyStatus = '';
+
   displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','discounted','transactionDate'];
   dataSourceSales!: MatTableDataSource<any>;
   @ViewChild('salesPaginator') salesPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private cashierService: CashierService) { }
+  constructor(private cashierService: CashierService,
+              private dialog : MatDialog) { }
 
   ngOnInit(): void {
     this.getAllSales();
@@ -31,7 +37,8 @@ export class SaleComponent implements OnInit {
           this.dataSourceSales.sort = this.sort;
         },
         error:()=>{
-          alert("Error While Fetching The Product Sales")
+          this.notifyMessage = 'Error While Fetching The Product Sales';
+          this.notifyStatus = 'ERROR';
         }
       })
   }
@@ -43,6 +50,13 @@ export class SaleComponent implements OnInit {
     if (this.dataSourceSales.paginator) {
       this.dataSourceSales.paginator.firstPage();
     }
+  }
+
+  OpenNotifyDialog() {
+    this.dialog.open(NotifPromptComponent, {
+      width: '20%',
+      data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
   }
 
 }

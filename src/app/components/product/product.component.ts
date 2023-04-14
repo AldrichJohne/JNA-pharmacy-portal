@@ -6,8 +6,8 @@ import {ProductService} from "../../services/product.service";
 import {SaleDialogComponent} from "../sale-dialog/sale-dialog.component";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
-import {CashierService} from "../../services/cashier.service";
 import {DeletePromptComponent} from "../delete-prompt/delete-prompt.component";
+import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
 
 @Component({
   selector: 'app-product',
@@ -15,6 +15,9 @@ import {DeletePromptComponent} from "../delete-prompt/delete-prompt.component";
   styleUrls: ['./product.component.scss']
 })
 export class ProductComponent implements OnInit {
+
+  notifyMessage = '';
+  notifyStatus = '';
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'classification', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -77,20 +80,6 @@ export class ProductComponent implements OnInit {
     })
   }
 
-  deleteProduct(id : number){
-    return this.productService.deleteProduct(id)
-      .subscribe({
-        next: () => {
-          alert("Product Deleted Successfully!")
-          this.getAllProductList();
-        },
-        error:()=>{
-          alert("Error While Deleting The Record")
-          this.getAllProductList();
-        }
-      })
-  }
-
   getAllProductList() {
     this.productService.getProductList()
       .subscribe({
@@ -100,7 +89,9 @@ export class ProductComponent implements OnInit {
           this.dataSourceProducts.sort = this.sort;
         },
         error:()=>{
-          alert("Error While Fetching The Products!")
+          this.notifyMessage = 'Error While Fetching The Products';
+          this.notifyStatus = 'ERROR';
+          this.OpenNotifyDialog();
         }
       })
   }
@@ -114,6 +105,13 @@ export class ProductComponent implements OnInit {
         this.getAllProductList();
       }
     })
+  }
+
+  OpenNotifyDialog() {
+    this.dialog.open(NotifPromptComponent, {
+      width: '20%',
+      data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
   }
 
 }
