@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import * as moment from 'moment';
+import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
 
 @Component({
   selector: 'app-dialog',
@@ -14,11 +15,14 @@ export class AddProductDialogComponent implements OnInit {
   productForm!: FormGroup;
   actionBtn: string = "Save"
   productFormTitle: string = "ADD PRODUCT"
+  notifyMessage = '';
+  notifyStatus = '';
 
   constructor(private formBuilder : FormBuilder,
               private productService: ProductService,
               @Inject(MAT_DIALOG_DATA) public editData : any,
-              private dialogRef : MatDialogRef<AddProductDialogComponent>) { }
+              private dialogRef : MatDialogRef<AddProductDialogComponent>,
+              private dialog : MatDialog) { }
 
   ngOnInit(): void {
       this.productForm = this.formBuilder.group({
@@ -56,12 +60,16 @@ export class AddProductDialogComponent implements OnInit {
         this.productService.addProduct(this.productForm.value)
           .subscribe({
             next:()=>{
-              alert("Product added successfully!");
+              this.notifyMessage = 'Product Added Successfully';
+              this.notifyStatus = 'OK';
+              this.OpenNotifyDialog();
               this.productForm.reset();
               this.dialogRef.close('save');
             },
             error:()=>{
-              alert("Error while adding the product");
+              this.notifyMessage = 'Error Adding Product';
+              this.notifyStatus = 'ERROR';
+              this.OpenNotifyDialog();
             }
           })
       }
@@ -74,14 +82,24 @@ export class AddProductDialogComponent implements OnInit {
     this.productService.updateProduct(this.productForm.value, this.editData.id)
     .subscribe({
       next:()=>{
-        alert("Product Updated Successfully!");
+        this.notifyMessage = 'Product Updated Successfully';
+        this.notifyStatus = 'OK';
+        this.OpenNotifyDialog();
         this.productForm.reset();
         this.dialogRef.close('update');
       },
       error:()=>{
-        alert("Error while updating the product");
+        this.notifyMessage = 'Error Updating Product';
+        this.notifyStatus = 'ERROR';
+        this.OpenNotifyDialog();
       }
     })
   }
 
+  OpenNotifyDialog() {
+    this.dialog.open(NotifPromptComponent, {
+      width: '20%',
+      data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
+  }
 }

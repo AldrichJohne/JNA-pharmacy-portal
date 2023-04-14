@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ProductService} from "../../services/product.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
 
 @Component({
   selector: 'app-delete-prompt',
@@ -9,10 +10,13 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 })
 export class DeletePromptComponent implements OnInit {
   productName = '';
+  notifyMessage = '';
+  notifyStatus = '';
 
   constructor(private productService: ProductService,
               @Inject(MAT_DIALOG_DATA) public deleteData : any,
-              private dialogRef : MatDialogRef<DeletePromptComponent>) { }
+              private dialogRef : MatDialogRef<DeletePromptComponent>,
+              private dialog : MatDialog) { }
 
   ngOnInit(): void {
     this.productName = this.deleteData.name;
@@ -22,13 +26,25 @@ export class DeletePromptComponent implements OnInit {
     return this.productService.deleteProduct(this.deleteData.id)
       .subscribe({
         next: () => {
-          alert("Product Deleted Successfully!")
+          this.notifyMessage = 'Product Deleted Successfully';
+          this.notifyStatus = 'OK';
+          this.OpenNotifyDialog();
           this.dialogRef.close()
         },
         error:()=>{
-          alert("Error While Deleting The Record")
+          this.notifyMessage = 'Error Deleting Product';
+          this.notifyStatus = 'ERROR';
+          this.OpenNotifyDialog();
+          this.dialogRef.close()
         }
       })
+  }
+
+  OpenNotifyDialog() {
+    this.dialog.open(NotifPromptComponent, {
+      width: '20%',
+      data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
   }
 
 }
