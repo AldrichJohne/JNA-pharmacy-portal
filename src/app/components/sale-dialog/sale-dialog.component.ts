@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import * as moment from 'moment';
 import {CashierService} from "../../services/cashier.service";
+import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
 
 @Component({
   selector: 'app-sale-dialog',
@@ -15,11 +16,14 @@ export class SaleDialogComponent implements OnInit {
   productSaleFormTitle: string = "SELL"
   currentDate = new Date();
   disableSellButton = false;
+  notifyStatus = '';
+  notifyMessage = '';
 
   constructor(private formBuilder : FormBuilder,
               private cashierService: CashierService,
               @Inject(MAT_DIALOG_DATA) public saleData : any,
-              private dialogRef : MatDialogRef<SaleDialogComponent>) { }
+              private dialogRef : MatDialogRef<SaleDialogComponent>,
+              private dialog : MatDialog) { }
 
   ngOnInit(): void {
     this.productSaleForm = this.formBuilder.group({
@@ -56,12 +60,16 @@ export class SaleDialogComponent implements OnInit {
         discountSwitch)
         .subscribe({
           next:()=>{
-            alert("Product Sell Success!");
+            this.notifyMessage = 'Product Sell Success';
+            this.notifyStatus = 'OK';
+            this.openNotifyDialog()
             this.productSaleForm.reset();
             this.dialogRef.close('sale');
           },
           error:()=>{
-            alert("You must fill out required fields");
+            this.notifyMessage = 'Error On Product Sell';
+            this.notifyStatus = 'ERROR';
+            this.openNotifyDialog();
             this.readyFields();
             this.productSaleForm.controls['transactionDateTemp'].enable();
             this.productSaleForm.controls['discountSwitch'].enable();
@@ -102,6 +110,13 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['price'].enable();
     this.productSaleForm.controls['srp'].enable();
     this.productSaleForm.controls['discountSwitch'].enable();
+  }
+
+  openNotifyDialog() {
+    this.dialog.open(NotifPromptComponent, {
+      width: '20%',
+      data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
   }
 
 }
