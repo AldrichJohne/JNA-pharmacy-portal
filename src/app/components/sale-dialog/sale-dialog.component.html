@@ -1,12 +1,23 @@
 <h1 mat-dialog-title>{{productSaleFormTitle}}</h1>
 <div mat-dialog-content>
     <form [formGroup]="productSaleForm">
-        <mat-form-field appearance="outline">
+      <div style="display: flex; justify-content: space-between;">
+        <mat-form-field appearance="outline" style="flex: 1;">
           <mat-label>Quantity</mat-label>
           <input formControlName="soldQuantity" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
+          <mat-label>Pharmacist</mat-label>
+          <mat-select formControlName="pharmacist" placeholder="who's on duty?">
+            <mat-option [value]="'Nova'">Nova</mat-option>
+            <mat-option [value]="'Jas'">Jas</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div style="display: flex; justify-content: space-between;">
+        <mat-form-field appearance="outline" style="flex: 1;">
           <mat-label>Transaction Date</mat-label>
           <input formControlName="transactionDateTemp" matInput [matDatepicker]="picker">
           <mat-hint>MM/DD/YYYY</mat-hint>
@@ -14,33 +25,38 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
           <mat-label>Discounted?</mat-label>
           <mat-select formControlName="discountSwitch" placeholder="is this discounted?">
             <mat-option [value]="false">False</mat-option>
             <mat-option [value]="true">True</mat-option>
           </mat-select>
         </mat-form-field>
+      </div>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Category</mat-label>
-            <input formControlName="classification" matInput>
+      <div style="display: flex; justify-content: space-between;">
+        <mat-form-field appearance="outline" style="flex: 1;">
+          <mat-label>Category</mat-label>
+          <input formControlName="classification" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-        <mat-label>Product Name</mat-label>
-        <input formControlName="productName" matInput>
+        <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
+          <mat-label>Product Name</mat-label>
+          <input formControlName="productName" matInput>
         </mat-form-field>
+      </div>
 
-        <mat-form-field appearance="outline">
+      <div style="display: flex; justify-content: space-between;">
+        <mat-form-field appearance="outline" style="flex: 1;">
           <mat-label>Price</mat-label>
           <input formControlName="price" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
           <mat-label>SRP</mat-label>
           <input formControlName="srp" matInput>
         </mat-form-field>
+      </div>
     </form>
 </div>
 

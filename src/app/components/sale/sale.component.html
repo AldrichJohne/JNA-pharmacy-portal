@@ -11,6 +11,12 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSourceSales" matSort>
 
+      <!-- pharmacist -->
+      <ng-container matColumnDef="pharmacist">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Pharmacist </th>
+        <td mat-cell *matCellDef="let row"> {{row.pharmacist}} </td>
+      </ng-container>
+
       <!-- name -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>

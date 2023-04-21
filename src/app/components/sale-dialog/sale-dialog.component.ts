@@ -4,6 +4,7 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog
 import * as moment from 'moment';
 import {CashierService} from "../../services/cashier.service";
 import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {variable} from "@angular/compiler/src/output/output_ast";
 
 @Component({
   selector: 'app-sale-dialog',
@@ -35,47 +36,57 @@ export class SaleDialogComponent implements OnInit {
       transactionDateTemp:['',Validators.required],
       transactionDate:[''],
       discountSwitch:['',Validators.required],
-      productId:['', Validators.required]
+      productId:['', Validators.required],
+      pharmacist:['', Validators.required]
     })
     this.readyFields();
   }
 
   sellProduct() {
     if (this.productSaleForm.controls['soldQuantity'].value > +this.saleData.remainingStock) {
-      alert('You cannot sell more that what is remaining');
+      this.notifyMessage = 'You cannot sell more than what is remaining';
+      this.notifyStatus = 'ERROR';
+      this.openNotifyDialog();
       this.productSaleForm.reset();
       this.dialogRef.close();
     } else {
-      this.enableRequiredFields();
-      this.productSaleForm.controls['productId'].setValue(this.saleData.id);
-      const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
-      const discountSwitch = this.productSaleForm.controls['discountSwitch'].value;
-      this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
-      this.productSaleForm.controls['transactionDateTemp'].disable();
-      this.productSaleForm.controls['discountSwitch'].disable();
+      if (this.productSaleForm.controls['pharmacist'].value == "" || this.productSaleForm.controls['soldQuantity'].value == "") {
+        this.notifyMessage = 'Missing required field/s';
+        this.notifyStatus = 'ERROR';
+        this.openNotifyDialog();
+        this.productSaleForm.reset();
+        this.dialogRef.close();
+      } else {
+        this.enableRequiredAdditionalFields();
+        this.productSaleForm.controls['productId'].setValue(this.saleData.id);
+        const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
+        const discountSwitch = this.productSaleForm.controls['discountSwitch'].value;
+        this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
+        this.productSaleForm.controls['transactionDateTemp'].disable();
+        this.productSaleForm.controls['discountSwitch'].disable();
 
-      this.cashierService.productSale(
-        this.productSaleForm.value,
-        this.saleData.id,
-        discountSwitch)
-        .subscribe({
-          next:()=>{
-            this.notifyMessage = 'Product Sell Success';
-            this.notifyStatus = 'OK';
-            this.openNotifyDialog()
-            this.productSaleForm.reset();
-            this.dialogRef.close('sale');
-          },
-          error:()=>{
-            this.notifyMessage = 'Error On Product Sell';
-            this.notifyStatus = 'ERROR';
-            this.openNotifyDialog();
-            this.readyFields();
-            this.productSaleForm.controls['transactionDateTemp'].enable();
-            this.productSaleForm.controls['discountSwitch'].enable();
-
-          }
-        })
+        this.cashierService.productSale(
+          this.productSaleForm.value,
+          this.saleData.id,
+          discountSwitch)
+          .subscribe({
+            next:()=>{
+              this.notifyMessage = 'Product Sell Success';
+              this.notifyStatus = 'OK';
+              this.openNotifyDialog()
+              this.productSaleForm.reset();
+              this.dialogRef.close('sale');
+            },
+            error:()=>{
+              this.notifyMessage = 'Error On Product Sell';
+              this.notifyStatus = 'ERROR';
+              this.openNotifyDialog();
+              this.readyFields();
+              this.productSaleForm.controls['transactionDateTemp'].enable();
+              this.productSaleForm.controls['discountSwitch'].enable();
+            }
+          })
+      }
     }
   }
 
@@ -104,7 +115,7 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['productId'].disable();
   }
 
-  private enableRequiredFields() {
+  private enableRequiredAdditionalFields() {
     this.productSaleForm.controls['transactionDate'].enable();
     this.productSaleForm.controls['classification'].enable();
     this.productSaleForm.controls['productName'].enable();
