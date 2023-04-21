@@ -37,6 +37,8 @@ export class AddProductDialogComponent implements OnInit {
 
     if(this.editData) {
       this.productForm.controls['category'].disable();
+      this.productForm.controls['pricePerPc'].disable();
+      this.productForm.controls['srpPerPc'].disable();
       this.actionBtn = "Update";
       this.productFormTitle = "UPDATE PRODUCT"
       this.productForm.controls['name'].setValue(this.editData.name);
@@ -44,8 +46,10 @@ export class AddProductDialogComponent implements OnInit {
       this.productForm.controls['totalStock'].setValue(this.editData.totalStock);
       this.productForm.controls['pricePerPc'].setValue(this.editData.pricePerPc);
       this.productForm.controls['srpPerPc'].setValue(this.editData.srpPerPc);
+      this.productForm.controls['srpPerPc'].disable();
       this.productForm.controls['expiryDateTemp'].setValue(this.editData.expiryDate);
       this.productForm.controls['expiryDate'].disable();
+
     }
   }
 

@@ -54,7 +54,7 @@ export class ProductComponent implements OnInit {
 
   openSalesDialog(row : any) {
     this.dialog.open(SaleDialogComponent, {
-      width:'40%',
+      width:'50%',
       data:row
     }).afterClosed().subscribe(val => {
         this.getAllProductList();
