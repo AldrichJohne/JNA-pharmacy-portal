@@ -1,6 +1,7 @@
 <div style="margin-top: 10px">
     <mat-list>
       <button mat-raised-button color="primary" (click)="openProductDialog()">ADD PRODUCT<mat-icon>add</mat-icon></button>
+      <button mat-raised-button class="refresh-table" color="basic" (click)="getAllProductList()">REFRESH TABLE<mat-icon>refresh</mat-icon></button>
       <mat-divider class="addFilterDivider"></mat-divider>
       <mat-form-field appearance="standard" class="filterBox">
         <mat-label>Filter</mat-label>
@@ -34,7 +35,7 @@
 
         <!-- remaining stock -->
         <ng-container matColumnDef="remainingStock">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Remaining Stocks </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Stocks </th>
           <td mat-cell *matCellDef="let row"> {{row.remainingStock}} </td>
         </ng-container>
 
@@ -74,6 +75,12 @@
           <td mat-cell *matCellDef="let row"> {{row.totalPriceSold | currency:'PHP'}} </td>
         </ng-container>
 
+        <!-- price sold -->
+        <ng-container matColumnDef="totalGross">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Gross </th>
+          <td mat-cell *matCellDef="let row"> {{row.gross | currency:'PHP'}} </td>
+        </ng-container>
+
         <!-- profit  -->
         <ng-container matColumnDef="profit">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Profit </th>
@@ -82,7 +89,7 @@
 
         <!-- expiry date column -->
         <ng-container matColumnDef="expiryDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiration Date </th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiration </th>
           <td mat-cell *matCellDef="let row"> {{row.expiryDate}} </td>
         </ng-container>
 
