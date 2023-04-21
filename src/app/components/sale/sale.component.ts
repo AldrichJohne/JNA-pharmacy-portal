@@ -18,7 +18,7 @@ export class SaleComponent implements OnInit {
   notifyMessage = '';
   notifyStatus = '';
 
-  displayedColumnsSales: string[] = ['name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate', 'action'];
+  displayedColumnsSales: string[] = ['pharmacist', 'name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate', 'action'];
   dataSourceSales!: MatTableDataSource<any>;
   @ViewChild('salesPaginator') salesPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

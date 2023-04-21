@@ -5,3 +5,9 @@ mat-form-field{
 mat-form-field[formControlName="expiryDate"] {
   display: none;
 }
+
+.add-edit-dialog-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
