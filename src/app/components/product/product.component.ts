@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit {
   notifyStatus = '';
   disableCashier = false;
 
-  displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'status', 'action'];
+  displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
   @ViewChild('productsPaginator') productsPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

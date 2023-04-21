@@ -6,7 +6,41 @@ table {
   width: 100%;
 }
 
+td {
+  text-align: center;
+}
+
 .addFilterDivider{
   margin-top: 5px;
   width: 25%;
+}
+
+.refresh-table {
+  margin-left: 10px;
+}
+
+.mat-column-cashier,
+.mat-column-remainingStock,
+.mat-column-totalStock,
+.mat-column-sold,
+.mat-column-srpPerPc,
+.mat-column-totalPriceRemaining,
+.mat-column-totalPriceSold,
+.mat-column-totalGross,
+.mat-column-profit,
+.mat-column-expiryDate,
+.mat-column-status,
+.mat-column-action,
+.mat-column-pricePerPc,
+.mat-column-className
+{
+  text-align: left;
+  padding: 5px 5px 5px 5px;
+}
+
+.mat-column-name {
+  word-break: break-word;
+  width: 20%;
+  text-align: left;
+  padding: 10px 10px 10px 10px;
 }
