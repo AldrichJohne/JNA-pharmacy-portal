@@ -5,8 +5,9 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
 import {MatDialog} from "@angular/material/dialog";
-import {DeletePromptComponent} from "../delete-prompt/delete-prompt.component";
 import {DeletePromptSaleComponent} from "../delete-prompt-sale/delete-prompt-sale.component";
+import {SharedEventService} from "../../services/shared-event.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-sale',
@@ -17,6 +18,8 @@ export class SaleComponent implements OnInit {
 
   notifyMessage = '';
   notifyStatus = '';
+  eventEmitter = false;
+  subscription: Subscription;
 
   displayedColumnsSales: string[] = ['pharmacist', 'name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate', 'action'];
   dataSourceSales!: MatTableDataSource<any>;
@@ -24,10 +27,24 @@ export class SaleComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private cashierService: CashierService,
-              private dialog : MatDialog) { }
+              private dialog : MatDialog,
+              public shareEventService: SharedEventService) {
+    this.subscription = this.shareEventService.mySubject.subscribe(
+      message => {
+        this.eventEmitter = message;
+        if (this.eventEmitter) {
+          this.getAllSales();
+        }
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.getAllSales();
+  }
+
+  emitGetAllProducts() {
+    this.shareEventService.mySubject.next(true);
   }
 
   getAllSales() {
@@ -37,7 +54,6 @@ export class SaleComponent implements OnInit {
           this.dataSourceSales = new MatTableDataSource(res);
           this.dataSourceSales.paginator = this.salesPaginator;
           this.dataSourceSales.sort = this.sort;
-          console.log(res)
         },
         error:()=>{
           this.notifyMessage = 'Error While Fetching The Product Sales';
@@ -69,6 +85,7 @@ export class SaleComponent implements OnInit {
       data: row
     }).afterClosed().subscribe(val => {
       this.getAllSales();
+      this.emitGetAllProducts();
     })
   }
 

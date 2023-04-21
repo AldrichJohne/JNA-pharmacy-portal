@@ -8,6 +8,8 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {DeletePromptComponent} from "../delete-prompt/delete-prompt.component";
 import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {SharedEventService} from "../../services/shared-event.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-product',
@@ -18,7 +20,8 @@ export class ProductComponent implements OnInit {
 
   notifyMessage = '';
   notifyStatus = '';
-  disableCashier = false;
+  eventEmitter = false;
+  subscription: Subscription;
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -26,11 +29,24 @@ export class ProductComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private dialog : MatDialog,
-                private productService: ProductService) {
+              private productService: ProductService,
+              public shareEventService: SharedEventService) {
+    this.subscription = this.shareEventService.mySubject.subscribe(
+      message => {
+        this.eventEmitter = message;
+        if (this.eventEmitter) {
+          this.getAllProductList();
+        }
+      }
+    );
   }
 
   ngOnInit(): void {
     this.getAllProductList();
+  }
+
+  emitGetALlSales() {
+    this.shareEventService.mySubject.next(true);
   }
 
   openProductDialog() {
@@ -57,7 +73,8 @@ export class ProductComponent implements OnInit {
       width:'50%',
       data:row
     }).afterClosed().subscribe(val => {
-        this.getAllProductList();
+      this.getAllProductList();
+      this.emitGetALlSales();
     })
   }
 
