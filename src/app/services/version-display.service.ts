@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class VersionDisplayService {
 
-  private baseUrl = 'http://localhost:8081/health';
+  private baseUrl = 'http://localhost:9091/health';
 
   constructor(private http : HttpClient) { }
 
