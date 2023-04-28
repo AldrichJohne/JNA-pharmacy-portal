@@ -54,31 +54,40 @@ export class AddProductDialogComponent implements OnInit {
   }
 
   addProduct() {
-    this.productForm.controls['expiryDate'].enable();
-    const convertedExpiryDate = moment(this.productForm.value.expiryDateTemp).format('YYYY-MM-DD');
-    this.productForm.patchValue({ expiryDate: convertedExpiryDate });
-    this.productForm.controls['expiryDateTemp'].disable();
-    this.productService.setCategory(JSON.stringify(this.productForm.get('category')!.value));
-    if(!this.editData){
-      if(this.productForm.valid) {
-        this.productService.addProduct(this.productForm.value)
-          .subscribe({
-            next:()=>{
-              this.notifyMessage = 'Product Added Successfully';
-              this.notifyStatus = 'OK';
-              this.OpenNotifyDialog();
-              this.productForm.reset();
-              this.dialogRef.close('save');
-            },
-            error:()=>{
-              this.notifyMessage = 'Error Adding Product';
-              this.notifyStatus = 'ERROR';
-              this.OpenNotifyDialog();
-            }
-          })
-      }
+    const capital = this.productForm.controls['pricePerPc'].value;
+    const retailPrice = this.productForm.controls['srpPerPc'].value;
+    if (capital >= retailPrice) {
+      this.productForm.controls['srpPerPc'].setValue('');
+      this.productForm.controls['pricePerPc'].setValue('');
+      this.notifyMessage = "Capital should be smaller than SRP.";
+      this.notifyStatus = "ERROR";
+      this.OpenNotifyDialog();
     } else {
-      this.updateProduct()
+      this.productForm.controls['expiryDate'].enable();
+      const convertedExpiryDate = moment(this.productForm.value.expiryDateTemp).format('YYYY-MM-DD');
+      this.productForm.patchValue({ expiryDate: convertedExpiryDate });
+      this.productService.setCategory(JSON.stringify(this.productForm.get('category')!.value));
+      if(!this.editData){
+        if(this.productForm.valid) {
+          this.productService.addProduct(this.productForm.value)
+            .subscribe({
+              next:()=>{
+                this.notifyMessage = 'Product Added Successfully';
+                this.notifyStatus = 'OK';
+                this.OpenNotifyDialog();
+                this.productForm.reset();
+                this.dialogRef.close('save');
+              },
+              error:()=>{
+                this.notifyMessage = 'Error Adding Product';
+                this.notifyStatus = 'ERROR';
+                this.OpenNotifyDialog();
+              }
+            })
+        }
+      } else {
+        this.updateProduct()
+      }
     }
   }
 

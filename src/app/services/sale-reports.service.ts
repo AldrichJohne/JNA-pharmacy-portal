@@ -5,7 +5,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class SaleReportsService {
-  private baseUrl = 'http://localhost:8081/report';
+  private baseUrl = 'http://localhost:9091/report';
 
   constructor(private http : HttpClient) { }
 
