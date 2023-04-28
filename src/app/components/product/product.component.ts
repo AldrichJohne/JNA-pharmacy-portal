@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit {
   notifyStatus = '';
   eventEmitter = false;
   subscription: Subscription;
+  pharmacistOnDuty = '';
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;

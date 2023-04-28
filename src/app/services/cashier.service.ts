@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class CashierService {
-  private baseUrl = 'http://localhost:8081/cashier';
+  private baseUrl = 'http://localhost:9091/cashier';
 
   constructor(private http : HttpClient) { }
 
