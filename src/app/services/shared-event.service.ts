@@ -13,5 +13,5 @@ export class SharedEventService {
     this.pharmacistGlobal.next(newPharmacistValue);
   }
 
-  mySubject = new Subject<any>();
+  triggerRefreshTable = new Subject<any>();
 }

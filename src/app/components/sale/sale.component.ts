@@ -29,7 +29,7 @@ export class SaleComponent implements OnInit {
   constructor(private cashierService: CashierService,
               private dialog : MatDialog,
               public shareEventService: SharedEventService) {
-    this.subscription = this.shareEventService.mySubject.subscribe(
+    this.subscription = this.shareEventService.triggerRefreshTable.subscribe(
       message => {
         this.eventEmitter = message;
         if (this.eventEmitter) {
@@ -44,7 +44,7 @@ export class SaleComponent implements OnInit {
   }
 
   emitGetAllProducts() {
-    this.shareEventService.mySubject.next(true);
+    this.shareEventService.triggerRefreshTable.next(true);
   }
 
   getAllSales() {
