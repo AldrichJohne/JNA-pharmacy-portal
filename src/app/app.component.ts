@@ -1,13 +1,6 @@
-import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import { ProductService } from './services/product.service';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {SaleDialogComponent} from "./components/sale-dialog/sale-dialog.component";
-import {SaleReportsService} from "./services/sale-reports.service";
-import {CashierService} from "./services/cashier.service";
+import { Component, OnInit } from '@angular/core';
+import { SharedEventService } from "./services/shared-event.service";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -15,22 +8,23 @@ import {CashierService} from "./services/cashier.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'product-system-v1';
 
-  displayedColumnsProducts: string[] = ['cashier', 'name', 'classification', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalPriceRemaining', 'totalPriceSold', 'profit', 'expiryDate', 'action'];
-  dataSourceProducts!: MatTableDataSource<any>;
-  dataSourceSales!: MatTableDataSource<any>;
-  @ViewChild('productsPaginator') productsPaginator!: MatPaginator;
-  @ViewChild('salesPaginator') salesPaginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  pharmacistControl = new FormControl('');
+  pharmacist = '';
 
-  constructor(private dialog : MatDialog,
-              private productService: ProductService,
-              private cashierService: CashierService,
-              private reportService: SaleReportsService) {
+  constructor(public shareEventService: SharedEventService) {
   }
   ngOnInit(): void {
-
+    this.pharmacistControl.valueChanges.subscribe((value : string) => {
+      if (value == 'Nova') {
+        this.pharmacist = 'Nova';
+      } else if (value == 'Jas') {
+        this.pharmacist = 'Jas'
+      } else {
+        this.pharmacist = ''
+      }
+      this.shareEventService.updatePharmacist(this.pharmacist);
+    })
   }
 
 

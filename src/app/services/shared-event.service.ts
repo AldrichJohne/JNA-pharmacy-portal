@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
-import {Subject} from "rxjs";
+import {BehaviorSubject, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SharedEventService {
-  mySubject = new Subject<any>();
+  private pharmacistGlobal = new BehaviorSubject<string>('');
+
+  pharmacistGlobal$ = this.pharmacistGlobal.asObservable();
+
+  updatePharmacist(newPharmacistValue : string) {
+    this.pharmacistGlobal.next(newPharmacistValue);
+  }
+
+  triggerRefreshTable = new Subject<any>();
 }

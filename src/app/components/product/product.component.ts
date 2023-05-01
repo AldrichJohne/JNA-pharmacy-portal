@@ -32,7 +32,7 @@ export class ProductComponent implements OnInit {
   constructor(private dialog : MatDialog,
               private productService: ProductService,
               public shareEventService: SharedEventService) {
-    this.subscription = this.shareEventService.mySubject.subscribe(
+    this.subscription = this.shareEventService.triggerRefreshTable.subscribe(
       message => {
         this.eventEmitter = message;
         if (this.eventEmitter) {
@@ -47,7 +47,7 @@ export class ProductComponent implements OnInit {
   }
 
   emitGetALlSales() {
-    this.shareEventService.mySubject.next(true);
+    this.shareEventService.triggerRefreshTable.next(true);
   }
 
   openProductDialog() {
