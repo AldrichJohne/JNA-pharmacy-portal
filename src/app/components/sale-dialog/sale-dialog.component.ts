@@ -4,7 +4,7 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog
 import * as moment from 'moment';
 import {CashierService} from "../../services/cashier.service";
 import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
-import {variable} from "@angular/compiler/src/output/output_ast";
+import {SharedEventService} from "../../services/shared-event.service";
 
 @Component({
   selector: 'app-sale-dialog',
@@ -19,14 +19,19 @@ export class SaleDialogComponent implements OnInit {
   disableSellButton = false;
   notifyStatus = '';
   notifyMessage = '';
+  pharmacistOnDuty = '';
 
   constructor(private formBuilder : FormBuilder,
               private cashierService: CashierService,
               @Inject(MAT_DIALOG_DATA) public saleData : any,
               private dialogRef : MatDialogRef<SaleDialogComponent>,
-              private dialog : MatDialog) { }
+              private dialog : MatDialog,
+              public shareEventService: SharedEventService) { }
 
   ngOnInit(): void {
+    this.shareEventService.pharmacistGlobal$.subscribe(value =>{
+      this.pharmacistOnDuty = value;
+    });
     this.productSaleForm = this.formBuilder.group({
       classification:['',Validators.required],
       productName:['',Validators.required],
@@ -113,6 +118,7 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['transactionDate'].disable();
     this.productSaleForm.controls['discountSwitch'].setValue(false);
     this.productSaleForm.controls['productId'].disable();
+    this.productSaleForm.controls['pharmacist'].setValue(this.pharmacistOnDuty);
   }
 
   private enableRequiredAdditionalFields() {
