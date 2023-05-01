@@ -2,7 +2,7 @@
   <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
     <mat-icon>store</mat-icon>
   </button>
-  <span>JNA Pharmacy & Happy<mat-icon>pets</mat-icon><app-version-display></app-version-display></span>
+  <span>JNA Pharmacy & Happy<mat-icon>pets</mat-icon></span>
   <span class="example-spacer"></span>
   <span>
     <mat-select [formControl]="pharmacistControl" placeholder="select pharmacist">
@@ -13,24 +13,27 @@
   </span>
 </mat-toolbar>
 
-<mat-tab-group mat-align-tabs="left">
-  <mat-tab label="PRODUCTS">
-    <div class="productsContainer">
-      <app-product></app-product>
-    </div>
-  </mat-tab>
+<div class="tab-container">
+  <mat-tab-group mat-align-tabs="left">
+    <mat-tab label="PRODUCTS">
+      <div class="productsContainer">
+        <app-product></app-product>
+      </div>
+    </mat-tab>
 
-  <mat-tab label="SALES">
-    <div class="salesContainer">
-      <app-sale></app-sale>
-    </div>
-  </mat-tab>
+    <mat-tab label="SALES">
+      <div class="salesContainer">
+        <app-sale></app-sale>
+      </div>
+    </mat-tab>
 
-  <mat-tab label="REPORTS">
-    <div class="reportContainer">
-      <app-report></app-report>
-    </div>
-  </mat-tab>
+    <mat-tab label="REPORTS">
+      <div class="reportContainer">
+        <app-report></app-report>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
 
-</mat-tab-group>
+<app-footer></app-footer>
 
