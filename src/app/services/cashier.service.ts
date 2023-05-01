@@ -1,24 +1,28 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {SharedEventService} from "./shared-event.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CashierService {
-  private baseUrl = 'http://localhost:9091/cashier';
+  pharmacyProductMsApiUrl = '';
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient,
+              public shareEventService: SharedEventService) {
+    this.pharmacyProductMsApiUrl = this.shareEventService.getPharmacyProductUrl();
+  }
 
   productSale(data : any, id : number, discountSwitch: any) {
     const params = { discountSwitch };
-    return this.http.post(this.baseUrl + '/product/sell/' + id, data, {params})
+    return this.http.post(this.pharmacyProductMsApiUrl + '/cashier/product/sell/' + id, data, {params})
   }
 
   getProductSales() {
-    return this.http.get<any>(this.baseUrl + '/products/sell')
+    return this.http.get<any>(this.pharmacyProductMsApiUrl + '/cashier/products/sell')
   }
 
   deleteProductSoldRecord(id : number) {
-    return this.http.delete<any>(this.baseUrl + '/product/sell/' + id)
+    return this.http.delete<any>(this.pharmacyProductMsApiUrl + '/cashier/product/sell/' + id)
   }
 }

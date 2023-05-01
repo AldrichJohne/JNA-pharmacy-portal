@@ -1,37 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {SharedEventService} from "./shared-event.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private baseUrl = 'http://localhost:9091/inventory';
+  pharmacyProductMsApiUrl = '';
   classification = '';
 
   public setCategory(category: string) {
     this.classification = category;
   }
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient,
+              public shareEventService: SharedEventService) {
+    this.pharmacyProductMsApiUrl = this.shareEventService.getPharmacyProductUrl();
+  }
 
   addProduct(data : any) {
-    return this.http.post(this.baseUrl + '/' + this.classification + '/products', data)
+    return this.http.post(this.pharmacyProductMsApiUrl + '/inventory/' + this.classification + '/products', data)
   }
 
   getCategory() {
-    return this.http.get<any>(this.baseUrl + '/classifications')
+    return this.http.get<any>(this.pharmacyProductMsApiUrl + '/inventory/classifications')
   }
 
   getProductList() {
-    return this.http.get<any>(this.baseUrl + '/products')
+    return this.http.get<any>(this.pharmacyProductMsApiUrl + '/inventory/products')
   }
 
   updateProduct(data : any, id : number) {
-    return this.http.put<any>(this.baseUrl + '/products/' + id, data)
+    return this.http.put<any>(this.pharmacyProductMsApiUrl + '/inventory/products/' + id, data)
   }
 
   deleteProduct(id : number) {
-    return this.http.delete<any>(this.baseUrl + '/products/' + id)
+    return this.http.delete<any>(this.pharmacyProductMsApiUrl + '/inventory/products/' + id)
   }
 
 }
