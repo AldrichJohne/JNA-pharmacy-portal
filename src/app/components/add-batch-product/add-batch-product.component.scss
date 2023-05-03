@@ -1,0 +1,56 @@
+.back-button {
+  position: fixed;
+  right: 0;
+}
+
+.product-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+}
+
+.product-list-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100%;
+  overflow-y: auto;
+  text-align: center;
+}
+
+table {
+  width: 100%; /* Make the table take up the full width of the container */
+  border-collapse: collapse;
+  max-height: 50%;
+}
+
+.mat-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+}
+
+second-half {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  background-color: mediumpurple;
+}
+
+.right-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.left-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}

@@ -10,6 +10,7 @@ import {DeletePromptComponent} from "../delete-prompt/delete-prompt.component";
 import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
 import {SharedEventService} from "../../services/shared-event.service";
 import {Subscription} from "rxjs";
+import {AddBatchProductComponent} from "../add-batch-product/add-batch-product.component";
 
 @Component({
   selector: 'app-product',
@@ -140,6 +141,16 @@ export class ProductComponent implements OnInit {
     this.dialog.open(NotifPromptComponent, {
       width: '20%',
       data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
+    });
+  }
+
+  openAddBatchProductDialog() {
+    this.dialog.open(AddBatchProductComponent, {
+      width: '95vw', /* Set the dialog width to 100% of the viewport */
+      height: '95vh', /* Set the dialog height to 100% of the viewport */
+      maxWidth: '95vw', /* Make sure the dialog does not exceed the viewport width */
+      maxHeight: '95vh', /* Make sure the dialog does not exceed the viewport height */
+      panelClass: 'full-screen-dialog' /* Add a custom class to the dialog */
     });
   }
 

@@ -22,6 +22,10 @@ export class ProductService {
     return this.http.post(this.pharmacyProductMsApiUrl + '/inventory/' + this.classification + '/products', data)
   }
 
+  addBatchProduct(data :any) {
+    return this.http.post(this.pharmacyProductMsApiUrl + '/v2/products/batch', data)
+  }
+
   getCategory() {
     return this.http.get<any>(this.pharmacyProductMsApiUrl + '/inventory/classifications')
   }

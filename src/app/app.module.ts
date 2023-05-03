@@ -35,6 +35,7 @@ import { DeletePromptComponent } from './components/delete-prompt/delete-prompt.
 import { NotifPromptComponent } from './components/notif-prompt/notif-prompt.component';
 import { DeletePromptSaleComponent } from './components/delete-prompt-sale/delete-prompt-sale.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { AddBatchProductComponent } from './components/add-batch-product/add-batch-product.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { FooterComponent } from './components/footer/footer.component';
     DeletePromptComponent,
     NotifPromptComponent,
     DeletePromptSaleComponent,
-    FooterComponent
+    FooterComponent,
+    AddBatchProductComponent
   ],
   imports: [
     BrowserModule,
