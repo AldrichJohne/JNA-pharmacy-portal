@@ -43,6 +43,9 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.shareEventService.pharmacistGlobal$.subscribe(value =>{
+      this.pharmacistOnDuty = value;
+    });
     this.getAllProductList();
   }
 
@@ -70,13 +73,19 @@ export class ProductComponent implements OnInit {
   }
 
   openSalesDialog(row : any) {
-    this.dialog.open(SaleDialogComponent, {
-      width:'50%',
-      data:row
-    }).afterClosed().subscribe(val => {
-      this.getAllProductList();
-      this.emitGetALlSales();
-    })
+    if (this.pharmacistOnDuty == '') {
+      this.notifyMessage = 'Please select a pharmacist on duty.'
+      this.notifyStatus = 'ERROR';
+      this.openNotifyDialog();
+    } else {
+      this.dialog.open(SaleDialogComponent, {
+        width:'50%',
+        data:row
+      }).afterClosed().subscribe(val => {
+        this.getAllProductList();
+        this.emitGetALlSales();
+      })
+    }
   }
 
   openDeletePrompt(row : any) {
