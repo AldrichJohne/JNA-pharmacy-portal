@@ -5,7 +5,7 @@ import {BehaviorSubject, Subject} from "rxjs";
   providedIn: 'root'
 })
 export class SharedEventService {
-  private uiVersion = '1.0.2';
+  private uiVersion = '1.2.0';
   private pharmacyProductMsApiUrl = 'http://localhost:8081/product-ms';
   private pharmacistGlobal = new BehaviorSubject<string>('');
   pharmacistGlobal$ = this.pharmacistGlobal.asObservable();
@@ -23,4 +23,8 @@ export class SharedEventService {
   }
 
   triggerRefreshTable = new Subject<any>();
+
+  triggerRefreshTableV2 = new Subject<any>();
+
+  batchAddButtonTrigger = new Subject<any>();
 }

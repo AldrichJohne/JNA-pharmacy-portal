@@ -1,6 +1,7 @@
 <div style="margin-top: 10px">
     <mat-list>
       <button mat-raised-button color="primary" (click)="openProductDialog()">ADD PRODUCT<mat-icon>add</mat-icon></button>
+      <button mat-raised-button color="primary" (click)="openAddBatchProductDialog()">ADD MANY PRODUCT<mat-icon>add</mat-icon></button>
       <mat-divider class="addFilterDivider"></mat-divider>
       <mat-form-field appearance="standard" class="filterBox">
         <mat-label>Filter</mat-label>
@@ -9,7 +10,6 @@
     </mat-list>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSourceProducts" matSort>
-
         <!-- cashier  -->
         <ng-container matColumnDef="cashier">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Cashier </th>

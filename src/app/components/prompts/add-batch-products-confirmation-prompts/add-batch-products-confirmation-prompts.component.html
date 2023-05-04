@@ -1,0 +1,12 @@
+<div class="main">
+  <div class="prompt-icon">
+    <mat-icon>warning</mat-icon>
+  </div>
+  <div class="prompt-message">
+    <mat-label>{{message}}</mat-label>
+  </div>
+  <div class="prompt-buttons">
+    <button mat-raised-button color="basic" (click)="closePrompt()">Cancel</button>
+    <button mat-raised-button color="{{okButtonColor}}" (click)="proceed()">Ok</button>
+  </div>
+</div>

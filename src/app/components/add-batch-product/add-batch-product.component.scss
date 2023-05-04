@@ -1,0 +1,80 @@
+.main-page {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+
+  .left-form-part {
+    flex-basis: 20%;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    .form-fields {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+
+     .form-buttons {
+       display: flex;
+       justify-content: flex-end;
+       align-items: center;
+       flex-basis: 30%;
+       padding: 0 10px;
+       margin-top: 50px;
+
+       .add-to-table {
+         flex: 1;
+       }
+
+       .clear-fields {
+         flex: 1;
+         margin-left: 10px;
+       }
+     }
+    }
+  }
+
+  .right-form-part {
+    flex-basis: 80%;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    .table-wrapper {
+      flex-grow: 1;
+      height: 90%;
+      overflow-y: scroll;
+
+      table {
+        width: 100%;
+
+        th {
+          position: sticky;
+          top: 0;
+          background-color: white;
+          z-index: 1;
+          background-color: mediumpurple;
+          color: white;
+        }
+      }
+    }
+
+    .empty-space {
+      width: 70%;
+    }
+
+    .table-buttons {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      flex-basis: 30%;
+      padding: 0 10px;
+
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+}

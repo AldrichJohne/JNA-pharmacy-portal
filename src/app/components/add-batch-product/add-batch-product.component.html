@@ -1,0 +1,109 @@
+<div class="main-page">
+  <div class="left-form-part">
+    <div class="form-fields">
+      <form [formGroup]="addProductForm">
+        <mat-form-field appearance="outline">
+          <mat-label>Product Category</mat-label>
+          <mat-select formControlName="classId" placeholder="category...">
+            <mat-option [value]="'Branded'">Branded</mat-option>
+            <mat-option [value]="'Generic'">Generic</mat-option>
+            <mat-option [value]="'Galenical'">Galenical</mat-option>
+            <mat-option [value]="'Ice Cream'">Ice Cream</mat-option>
+            <mat-option [value]="'Others'">Others</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input formControlName="name" matInput placeholder="product name...">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Capital</mat-label>
+          <input formControlName="pricePerPc" matInput type="number" placeholder="price...">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>SRP</mat-label>
+          <input formControlName="srpPerPc" matInput type="number" placeholder="srp...">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Total Stocks</mat-label>
+          <input formControlName="totalStock" matInput type="number" placeholder="total stocks...">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Expiration Date</mat-label>
+          <input formControlName="expiryDateTemp" matInput [matDatepicker]="picker">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <div class="form-buttons">
+          <button mat-raised-button color="primary" (click)="addProductToList()" class="add-to-table">Add</button>
+          <button mat-raised-button (click)="clearForm()" class="clear-fields">Clear</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="right-form-part">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="classId">
+          <th mat-header-cell *matHeaderCellDef>Class</th>
+          <td mat-cell *matCellDef="let item">{{ item.classId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalStock">
+          <th mat-header-cell *matHeaderCellDef>Total Stock</th>
+          <td mat-cell *matCellDef="let item">{{ item.totalStock }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pricePerPc">
+          <th mat-header-cell *matHeaderCellDef>Price Per Piece</th>
+          <td mat-cell *matCellDef="let item">{{ item.pricePerPc }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="srpPerPc">
+          <th mat-header-cell *matHeaderCellDef>SRP Per Piece</th>
+          <td mat-cell *matCellDef="let item">{{ item.srpPerPc }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expiryDate">
+          <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+          <td mat-cell *matCellDef="let item">{{ item.expiryDate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button (click)="removeProductFromList(item)" color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </div>
+    <div class="empty-space"></div>
+    <div class="table-buttons">
+      <button mat-raised-button color="warn" (click)="confirmClose()">Close</button>
+      <button mat-raised-button color="warn" (click)="confirmClearTable()">Clear</button>
+      <button mat-raised-button color="primary" (click)="confirmSave()">Save</button>
+    </div>
+  </div>
+</div>
+
+
+
+

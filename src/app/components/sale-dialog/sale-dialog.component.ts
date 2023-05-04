@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import * as moment from 'moment';
 import {CashierService} from "../../services/cashier.service";
-import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.component";
 import {SharedEventService} from "../../services/shared-event.service";
 
 @Component({
