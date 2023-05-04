@@ -31,11 +31,12 @@ import { VersionDisplayComponent } from './components/version-display/version-di
 import { SaleComponent } from './components/sale/sale.component';
 import { ReportComponent } from './components/report/report.component';
 import { ProductComponent } from './components/product/product.component';
-import { DeletePromptComponent } from './components/delete-prompt/delete-prompt.component';
-import { NotifPromptComponent } from './components/notif-prompt/notif-prompt.component';
+import { DeletePromptComponent } from './components/prompts/delete-prompt/delete-prompt.component';
+import { NotifPromptComponent } from './components/prompts/notif-prompt/notif-prompt.component';
 import { DeletePromptSaleComponent } from './components/delete-prompt-sale/delete-prompt-sale.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AddBatchProductComponent } from './components/add-batch-product/add-batch-product.component';
+import { AddBatchProductsConfirmationPromptsComponent } from './components/prompts/add-batch-products-confirmation-prompts/add-batch-products-confirmation-prompts.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { AddBatchProductComponent } from './components/add-batch-product/add-bat
     NotifPromptComponent,
     DeletePromptSaleComponent,
     FooterComponent,
-    AddBatchProductComponent
+    AddBatchProductComponent,
+    AddBatchProductsConfirmationPromptsComponent
   ],
   imports: [
     BrowserModule,

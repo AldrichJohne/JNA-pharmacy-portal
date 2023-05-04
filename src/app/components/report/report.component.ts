@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import * as moment from "moment";
 import {SaleReportsService} from "../../services/sale-reports.service";
-import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({

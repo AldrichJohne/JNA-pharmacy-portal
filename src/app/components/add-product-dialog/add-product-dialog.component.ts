@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
 import {MatDialogRef, MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import * as moment from 'moment';
-import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.component";
 
 @Component({
   selector: 'app-dialog',

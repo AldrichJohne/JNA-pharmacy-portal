@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {VersionDisplayService} from "../../services/version-display.service";
-import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.component";
 import {MatDialog} from "@angular/material/dialog";
 
 @Component({

@@ -10,8 +10,7 @@ export class NotifPromptComponent implements OnInit {
   message : any;
   icon : any;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public notifData : any,
-              private dialogRef : MatDialogRef<NotifPromptComponent>) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public notifData : any) { }
 
   ngOnInit(): void {
     this.message = this.notifData.notifyMessage;
@@ -19,7 +18,6 @@ export class NotifPromptComponent implements OnInit {
   }
 
   checkNotificationStatus() {
-    console.log(this.notifData.notifyStatus);
     if (this.notifData.notifyStatus == 'OK') {
       this.icon = 'thumb_up_alt';
     } else {

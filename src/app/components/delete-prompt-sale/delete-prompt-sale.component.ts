@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {CashierService} from "../../services/cashier.service";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {NotifPromptComponent} from "../notif-prompt/notif-prompt.component";
+import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.component";
 
 @Component({
   selector: 'app-delete-prompt-sale',
