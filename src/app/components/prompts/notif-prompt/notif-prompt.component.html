@@ -1,5 +1,11 @@
-<h1><mat-icon>{{icon}}</mat-icon></h1>
-<h1 mat-dialog-title>{{message}}</h1>
-<div mat-dialog-action class="delete-prompt">
-  <button mat-raised-button color="primary" mat-dialog-close>OK</button>
+<div class="main">
+  <div class="prompt-icon">
+    <mat-icon>{{icon}}</mat-icon>
+  </div>
+  <div class="prompt-message">
+    <mat-label>{{message}}</mat-label>
+  </div>
+  <div class="prompt-buttons">
+    <button mat-raised-button color="primary" mat-dialog-close>OK</button>
+  </div>
 </div>

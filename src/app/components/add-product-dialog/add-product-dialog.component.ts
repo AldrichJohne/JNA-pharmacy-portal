@@ -13,6 +13,7 @@ import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.compone
 export class AddProductDialogComponent implements OnInit {
 
   productForm!: FormGroup;
+  currentDate = new Date();
   actionBtn: string = "Save"
   productFormTitle: string = "ADD PRODUCT"
   notifyMessage = '';
@@ -35,6 +36,9 @@ export class AddProductDialogComponent implements OnInit {
         expiryDate:['']
       });
 
+      this.productForm.controls['totalStock'].setValue(0);
+      this.productForm.controls['expiryDateTemp'].setValue(this.currentDate);
+
     if(this.editData) {
       this.productForm.controls['category'].disable();
       this.productForm.controls['pricePerPc'].disable();
@@ -56,12 +60,12 @@ export class AddProductDialogComponent implements OnInit {
   addProduct() {
     const capital = this.productForm.controls['pricePerPc'].value;
     const retailPrice = this.productForm.controls['srpPerPc'].value;
-    if (capital >= retailPrice) {
+    if (capital != '' && retailPrice != '' && capital >= retailPrice) {
       this.productForm.controls['srpPerPc'].setValue('');
       this.productForm.controls['pricePerPc'].setValue('');
       this.notifyMessage = "Capital should be smaller than SRP.";
       this.notifyStatus = "ERROR";
-      this.OpenNotifyDialog();
+      this.openNotifyDialog();
     } else {
       this.productForm.controls['expiryDate'].enable();
       const convertedExpiryDate = moment(this.productForm.value.expiryDateTemp).format('YYYY-MM-DD');
@@ -74,16 +78,21 @@ export class AddProductDialogComponent implements OnInit {
               next:()=>{
                 this.notifyMessage = 'Product Added Successfully';
                 this.notifyStatus = 'OK';
-                this.OpenNotifyDialog();
+                this.openNotifyDialog();
                 this.productForm.reset();
                 this.dialogRef.close('save');
               },
               error:()=>{
                 this.notifyMessage = 'Error Adding Product';
                 this.notifyStatus = 'ERROR';
-                this.OpenNotifyDialog();
+                this.openNotifyDialog();
               }
             })
+        }
+        else {
+          this.notifyMessage = 'Missing required fields.';
+          this.notifyStatus = 'ERROR';
+          this.openNotifyDialog();
         }
       } else {
         this.updateProduct()
@@ -97,19 +106,19 @@ export class AddProductDialogComponent implements OnInit {
       next:()=>{
         this.notifyMessage = 'Product Updated Successfully';
         this.notifyStatus = 'OK';
-        this.OpenNotifyDialog();
+        this.openNotifyDialog();
         this.productForm.reset();
         this.dialogRef.close('update');
       },
       error:()=>{
         this.notifyMessage = 'Error Updating Product';
         this.notifyStatus = 'ERROR';
-        this.OpenNotifyDialog();
+        this.openNotifyDialog();
       }
     })
   }
 
-  OpenNotifyDialog() {
+  openNotifyDialog() {
     this.dialog.open(NotifPromptComponent, {
       width: '20%',
       data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }

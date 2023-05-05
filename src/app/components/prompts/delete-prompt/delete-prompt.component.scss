@@ -1,8 +1,19 @@
-.delete-prompt {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.delete-btn {
-  margin-left: 8px;
+.main {
+  .prompt-icon {
+    height: 25%;
+    text-align: center;
+  }
+
+  .prompt-message {
+    height: 50%;
+    text-align: center;
+  }
+
+  .prompt-buttons {
+    height: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10%;
+  }
 }
