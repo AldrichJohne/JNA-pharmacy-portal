@@ -37,6 +37,7 @@ import { DeletePromptSaleComponent } from './components/delete-prompt-sale/delet
 import { FooterComponent } from './components/footer/footer.component';
 import { AddBatchProductComponent } from './components/add-batch-product/add-batch-product.component';
 import { AddBatchProductsConfirmationPromptsComponent } from './components/prompts/add-batch-products-confirmation-prompts/add-batch-products-confirmation-prompts.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { AddBatchProductsConfirmationPromptsComponent } from './components/promp
     MatDividerModule,
     MatListModule,
     MatCheckboxModule,
-    MatRadioModule
+    MatRadioModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

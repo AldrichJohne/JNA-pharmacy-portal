@@ -11,6 +11,7 @@ import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.compone
 import {SharedEventService} from "../../services/shared-event.service";
 import {Subscription} from "rxjs";
 import {AddBatchProductComponent} from "../add-batch-product/add-batch-product.component";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-product',
@@ -23,6 +24,7 @@ export class ProductComponent implements OnInit {
   notifyStatus = '';
   subscription: Subscription;
   pharmacistOnDuty = '';
+  productPageForm!: FormGroup;
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -31,7 +33,8 @@ export class ProductComponent implements OnInit {
 
   constructor(private dialog : MatDialog,
               private productService: ProductService,
-              public shareEventService: SharedEventService) {
+              public shareEventService: SharedEventService,
+              private formBuilder : FormBuilder) {
     this.subscription = this.shareEventService.triggerRefreshTable.subscribe(
       message => {
         if (message) {
@@ -42,11 +45,16 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.productPageForm = this.formBuilder.group({
+      addProductDropDownTrigger: ['']
+    });
     this.shareEventService.pharmacistGlobal$.subscribe(value =>{
       this.pharmacistOnDuty = value;
     });
     this.getAllProductList();
   }
+
+
 
   emitGetALlSales() {
     this.shareEventService.triggerRefreshTable.next(true);
