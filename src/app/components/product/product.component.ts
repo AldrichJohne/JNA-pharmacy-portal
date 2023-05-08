@@ -25,6 +25,9 @@ export class ProductComponent implements OnInit {
   subscription: Subscription;
   pharmacistOnDuty = '';
   productPageForm!: FormGroup;
+  currentStock = '';
+  stocksStatusColor = '';
+  expiryStatusColor = '';
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -123,6 +126,7 @@ export class ProductComponent implements OnInit {
           this.dataSourceProducts.paginator = this.productsPaginator;
           this.dataSourceProducts.sort = this.sort;
           this.checkProductStatus(res);
+          this.checkProductRemainingStock(res);
         },
         error:()=>{
           this.notifyMessage = 'Error While Fetching The Products';
@@ -160,6 +164,17 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  checkProductRemainingStock(response: any) {
+    for (const row of response) {
+      if (row.remainingStock == 0) {
+        row.remainingStock = "out of stocks";
+        this.stocksStatusColor = 'red';
+      } else {
+        this.stocksStatusColor = '';
+      }
+    }
+  }
+
   checkProductStatus(response: any) {
     for (const row of response) {
       const givenExpiryDate = new Date(row.expiryDate);
@@ -169,6 +184,9 @@ export class ProductComponent implements OnInit {
       row.expiryStatus = this.convertExpiryStatus(daysDiff);
       if (daysDiff <= 0) {
         row.disableCashier = true;
+        this.expiryStatusColor = 'red';
+      } else {
+        this.expiryStatusColor = '';
       }
       if (row.remainingStock <= 0) {
         row.disableCashier = true;
