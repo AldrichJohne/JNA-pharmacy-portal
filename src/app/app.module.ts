@@ -33,7 +33,7 @@ import { ReportComponent } from './components/report/report.component';
 import { ProductComponent } from './components/product/product.component';
 import { DeletePromptComponent } from './components/prompts/delete-prompt/delete-prompt.component';
 import { NotifPromptComponent } from './components/prompts/notif-prompt/notif-prompt.component';
-import { DeletePromptSaleComponent } from './components/delete-prompt-sale/delete-prompt-sale.component';
+import { DeletePromptSaleComponent } from './components/prompts/delete-prompt-sale/delete-prompt-sale.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AddBatchProductComponent } from './components/add-batch-product/add-batch-product.component';
 import { AddBatchProductsConfirmationPromptsComponent } from './components/prompts/add-batch-products-confirmation-prompts/add-batch-products-confirmation-prompts.component';
