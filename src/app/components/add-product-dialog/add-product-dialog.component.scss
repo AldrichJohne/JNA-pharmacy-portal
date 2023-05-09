@@ -1,13 +1,18 @@
-mat-form-field{
-    width: 100%;
-}
+.main {
+  .form-footer {
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
 
-mat-form-field[formControlName="expiryDate"] {
-  display: none;
-}
+    .space {
+      width: 70%;
+    }
 
-.add-edit-dialog-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 30%;
+    }
+  }
 }

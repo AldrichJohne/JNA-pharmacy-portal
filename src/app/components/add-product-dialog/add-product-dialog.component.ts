@@ -14,8 +14,6 @@ export class AddProductDialogComponent implements OnInit {
 
   productForm!: FormGroup;
   currentDate = new Date();
-  actionBtn: string = "Save"
-  productFormTitle: string = "ADD PRODUCT"
   notifyMessage = '';
   notifyStatus = '';
 
@@ -39,22 +37,6 @@ export class AddProductDialogComponent implements OnInit {
       this.productForm.controls['totalStock'].setValue(0);
       this.productForm.controls['expiryDateTemp'].setValue(this.currentDate);
 
-    if(this.editData) {
-      this.productForm.controls['category'].disable();
-      this.productForm.controls['pricePerPc'].disable();
-      this.productForm.controls['srpPerPc'].disable();
-      this.actionBtn = "Update";
-      this.productFormTitle = "UPDATE PRODUCT"
-      this.productForm.controls['name'].setValue(this.editData.name);
-      this.productForm.controls['category'].setValue(this.editData.plainClassificationDto.id);
-      this.productForm.controls['totalStock'].setValue(this.editData.totalStock);
-      this.productForm.controls['pricePerPc'].setValue(this.editData.pricePerPc);
-      this.productForm.controls['srpPerPc'].setValue(this.editData.srpPerPc);
-      this.productForm.controls['srpPerPc'].disable();
-      this.productForm.controls['expiryDateTemp'].setValue(this.editData.expiryDate);
-      this.productForm.controls['expiryDate'].disable();
-
-    }
   }
 
   addProduct() {
@@ -71,51 +53,29 @@ export class AddProductDialogComponent implements OnInit {
       const convertedExpiryDate = moment(this.productForm.value.expiryDateTemp).format('YYYY-MM-DD');
       this.productForm.patchValue({ expiryDate: convertedExpiryDate });
       this.productService.setCategory(JSON.stringify(this.productForm.get('category')!.value));
-      if(!this.editData){
-        if(this.productForm.valid) {
-          this.productService.addProduct(this.productForm.value)
-            .subscribe({
-              next:()=>{
-                this.notifyMessage = 'Product Added Successfully';
-                this.notifyStatus = 'OK';
-                this.openNotifyDialog();
-                this.productForm.reset();
-                this.dialogRef.close('save');
-              },
-              error:()=>{
-                this.notifyMessage = 'Error Adding Product';
-                this.notifyStatus = 'ERROR';
-                this.openNotifyDialog();
-              }
-            })
-        }
-        else {
-          this.notifyMessage = 'Missing required fields.';
-          this.notifyStatus = 'ERROR';
-          this.openNotifyDialog();
-        }
-      } else {
-        this.updateProduct()
+      if(this.productForm.valid) {
+        this.productService.addProduct(this.productForm.value)
+          .subscribe({
+            next:()=>{
+              this.notifyMessage = 'Product Added Successfully';
+              this.notifyStatus = 'OK';
+              this.openNotifyDialog();
+              this.productForm.reset();
+              this.dialogRef.close('save');
+            },
+            error:()=>{
+              this.notifyMessage = 'Error Adding Product';
+              this.notifyStatus = 'ERROR';
+              this.openNotifyDialog();
+            }
+          })
       }
-    }
-  }
-
-  updateProduct() {
-    this.productService.updateProduct(this.productForm.value, this.editData.id)
-    .subscribe({
-      next:()=>{
-        this.notifyMessage = 'Product Updated Successfully';
-        this.notifyStatus = 'OK';
-        this.openNotifyDialog();
-        this.productForm.reset();
-        this.dialogRef.close('update');
-      },
-      error:()=>{
-        this.notifyMessage = 'Error Updating Product';
+      else {
+        this.notifyMessage = 'Missing required fields.';
         this.notifyStatus = 'ERROR';
         this.openNotifyDialog();
       }
-    })
+    }
   }
 
   openNotifyDialog() {

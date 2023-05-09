@@ -1,5 +1,8 @@
-<h1 mat-dialog-title>{{productFormTitle}}</h1>
-<div mat-dialog-content>
+<div class="main">
+  <div class="form-title">
+    <h1 mat-dialog-title>ADD PRODUCT</h1>
+  </div>
+  <div class="form-fields">
     <form [formGroup]="productForm">
       <div style="display: flex; justify-content: space-between;">
         <mat-form-field appearance="outline" style="flex: 1;">
@@ -39,17 +42,19 @@
 
         <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">
           <mat-label>Expiration Date</mat-label>
-          <input formControlName="expiryDateTemp" type="text" matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" pattern="^(0[1-9]|1[0-2])\/([1-9]|[12][0-9]|3[01])\/\d{4}$">
+          <input formControlName="expiryDateTemp" type="text" matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY">
           <mat-hint>MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-
     </form>
-</div>
-
-<div mat-dialog-action class="add-edit-dialog-buttons">
-    <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
-    <button style="margin-left: 8px;" mat-raised-button color="primary" (click)="addProduct()">{{actionBtn}}</button>
+  </div>
+  <div class="form-footer">
+    <div class="space"></div>
+    <div class="form-buttons">
+      <button mat-raised-button color="warn" mat-dialog-close>Cancel</button>
+      <button style="margin-left: 8px;" mat-raised-button color="primary" (click)="addProduct()">ADD</button>
+    </div>
+  </div>
 </div>
