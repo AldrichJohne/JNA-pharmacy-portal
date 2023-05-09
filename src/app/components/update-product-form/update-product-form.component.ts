@@ -65,28 +65,35 @@ export class UpdateProductFormComponent implements OnInit {
   }
 
   updateProduct() {
-    const convertedExpiryDate = moment(this.productForm.value.expiryDateTemp).format('YYYY-MM-DD');
-    const updatedProductValue = {
-      name: this.productForm.controls['name'].value,
-      totalStock: this.productForm.controls['totalStock'].value,
-      expiryDate: convertedExpiryDate
-    };
+    if (this.productForm.controls['totalStock'].value < this.sold) {
+      this.notifyMessage = "You can't make total stock lesser than sold, it will become negative.";
+      this.notifyStatus = "ERROR";
+      this.openNotifyDialog();
+      this.productForm.controls['totalStock'].setValue(this.totalStock);
+    } else {
+      const convertedExpiryDate = moment(this.productForm.value.expiryDateTemp).format('YYYY-MM-DD');
+      const updatedProductValue = {
+        name: this.productForm.controls['name'].value,
+        totalStock: this.productForm.controls['totalStock'].value,
+        expiryDate: convertedExpiryDate
+      };
 
-    this.productService.updateProduct(updatedProductValue, this.editData.id)
-      .subscribe({
-        next:()=>{
-          this.notifyMessage = 'Product Updated Successfully';
-          this.notifyStatus = 'OK';
-          this.openNotifyDialog();
-          this.productForm.reset();
-          this.dialogRef.close('update');
-        },
-        error:()=>{
-          this.notifyMessage = 'Error Updating Product';
-          this.notifyStatus = 'ERROR';
-          this.openNotifyDialog();
-        }
-      })
+      this.productService.updateProduct(updatedProductValue, this.editData.id)
+        .subscribe({
+          next:()=>{
+            this.notifyMessage = 'Product Updated Successfully';
+            this.notifyStatus = 'OK';
+            this.openNotifyDialog();
+            this.productForm.reset();
+            this.dialogRef.close('update');
+          },
+          error:()=>{
+            this.notifyMessage = 'Error Updating Product';
+            this.notifyStatus = 'ERROR';
+            this.openNotifyDialog();
+          }
+        })
+    }
   }
 
   openNotifyDialog() {
