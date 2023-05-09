@@ -12,6 +12,7 @@ import {SharedEventService} from "../../services/shared-event.service";
 import {Subscription} from "rxjs";
 import {AddBatchProductComponent} from "../add-batch-product/add-batch-product.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {UpdateProductFormComponent} from "../update-product-form/update-product-form.component";
 
 @Component({
   selector: 'app-product',
@@ -161,7 +162,18 @@ export class ProductComponent implements OnInit {
       maxWidth: '100vw', /* Make sure the dialog does not exceed the viewport width */
       maxHeight: '100vh', /* Make sure the dialog does not exceed the viewport height */
       panelClass: 'full-screen-dialog' /* Add a custom class to the dialog */
+    }).afterClosed().subscribe(value => {
+      this.getAllProductList();
     });
+  }
+
+  openUpdateProductForm(row : any) {
+    this.dialog.open(UpdateProductFormComponent, {
+      width: '50%',
+      data: row
+    }).afterClosed().subscribe(val=>{
+      this.getAllProductList();
+    })
   }
 
   checkProductRemainingStock(response: any) {

@@ -1,0 +1,46 @@
+<div class="main">
+  <div class="form-title"><p>Update Product</p></div>
+  <div class="product-info">
+    <div class="left-list-part">
+      <mat-label>Name: {{name}}</mat-label>
+      <mat-label>Class: {{class}}</mat-label>
+      <mat-label>Current Stocks: {{currentStock}}</mat-label>
+      <mat-label>Total Stocks: {{totalStock}}</mat-label>
+      <mat-label>Sold: {{sold}}</mat-label>
+    </div>
+    <div class="right-list-part">
+      <mat-label>Capital: {{capital}}</mat-label>
+      <mat-label>SRP: {{retailPrice}}</mat-label>
+      <mat-label>Gross: {{gross}}</mat-label>
+      <mat-label>Profit: {{profit}}</mat-label>
+      <mat-label>Expiration: {{expiration}}</mat-label>
+    </div>
+  </div>
+  <div class="form-fields">
+    <form [formGroup]="productForm">
+      <div class="form">
+        <mat-form-field appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input formControlName="name" type="text" matInput placeholder="product name...">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Total Stocks</mat-label>
+          <input formControlName="totalStock" type="number" matInput type="number" placeholder="total stocks..." oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" >
+          <mat-label>Expiration Date</mat-label>
+          <input formControlName="expiryDateTemp" type="text" matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" pattern="^(0[1-9]|1[0-2])\/([1-9]|[12][0-9]|3[01])\/\d{4}$">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div class="form-buttons">
+    <button mat-raised-button color="warn" mat-dialog-close (click)="closeForm()">Cancel</button>
+    <button style="margin-left: 8px;" mat-raised-button color="primary" (click)="updateProduct()">UPDATE</button>
+  </div>
+</div>

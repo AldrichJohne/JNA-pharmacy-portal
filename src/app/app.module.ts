@@ -38,6 +38,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AddBatchProductComponent } from './components/add-batch-product/add-batch-product.component';
 import { AddBatchProductsConfirmationPromptsComponent } from './components/prompts/add-batch-products-confirmation-prompts/add-batch-products-confirmation-prompts.component';
 import {MatMenuModule} from '@angular/material/menu';
+import { UpdateProductFormComponent } from './components/update-product-form/update-product-form.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {MatMenuModule} from '@angular/material/menu';
     DeletePromptSaleComponent,
     FooterComponent,
     AddBatchProductComponent,
-    AddBatchProductsConfirmationPromptsComponent
+    AddBatchProductsConfirmationPromptsComponent,
+    UpdateProductFormComponent
   ],
   imports: [
     BrowserModule,
