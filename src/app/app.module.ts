@@ -39,6 +39,7 @@ import { AddBatchProductComponent } from './components/add-batch-product/add-bat
 import { AddBatchProductsConfirmationPromptsComponent } from './components/prompts/add-batch-products-confirmation-prompts/add-batch-products-confirmation-prompts.component';
 import {MatMenuModule} from '@angular/material/menu';
 import { UpdateProductFormComponent } from './components/update-product-form/update-product-form.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { UpdateProductFormComponent } from './components/update-product-form/upd
     MatListModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatMenuModule
+    MatMenuModule,
+    MatGridListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

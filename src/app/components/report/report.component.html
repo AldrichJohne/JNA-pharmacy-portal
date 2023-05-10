@@ -1,69 +1,84 @@
-<form [formGroup]="dateRangeReportForm" class="dateRangeReportForm">
-  <div class="chooseDate">
+<div class="main">
+  <div class="upper-part">
+    <div class="space-left">
 
-    <mat-form-field appearance="fill" class="report">
-      <mat-label>Enter a date range</mat-label>
-      <mat-date-range-input [rangePicker]="reportDatePicker">
-        <input formControlName="startDateTemp" matStartDate placeholder="Start date">
-        <input formControlName="endDateTemp" matEndDate placeholder="End date">
-      </mat-date-range-input>
-      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="reportDatePicker"></mat-datepicker-toggle>
-      <mat-date-range-picker #reportDatePicker></mat-date-range-picker>
-    </mat-form-field>
-
-    <div class="report-button">
-      <button mat-raised-button color="primary" (click)="findReportRecord()">SEARCH<mat-icon>search</mat-icon></button>
-      <button mat-raised-button color="basic" (click)="reportClearAllCards()" class="report-button-clear">CLEAR<mat-icon> clear_all</mat-icon></button>
     </div>
-
-    <mat-card class="reportCard">
-      <mat-card-title class="reportTitle">Date: {{ reportDateRangeValue }}</mat-card-title>
-      <mat-card-content>
-        <p>Gross: {{ reportGrossValue | currency:'PHP'}}</p>
-        <p>Profit: {{ reportProfitValue | currency:'PHP'}}</p>
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="reportCard">
-      <mat-card-title class="reportTitle">Break Down</mat-card-title>
-      <div class="report-by-class-card">
-        <mat-card class="report-by-class-cards">
-          <mat-card-title class="reportTitle">Branded</mat-card-title>
-          <mat-card-content>
-            <p>Gross: {{ brandedGross | currency:'PHP'}}</p>
-            <p>Profit: {{ brandedProfit | currency:'PHP'}}</p>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="report-by-class-cards">
-          <mat-card-title class="reportTitle">Generics</mat-card-title>
-          <mat-card-content>
-            <p>Gross: {{ genericsGross | currency:'PHP'}}</p>
-            <p>Profit: {{ genericsProfit | currency:'PHP'}}</p>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="report-by-class-cards">
-          <mat-card-title class="reportTitle">Galenicals</mat-card-title>
-          <mat-card-content>
-            <p>Gross: {{ galenicalsGross | currency:'PHP'}}</p>
-            <p>Profit: {{ galenicalsProfit | currency:'PHP'}}</p>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="report-by-class-cards">
-          <mat-card-title class="reportTitle">Ice Cream</mat-card-title>
-          <mat-card-content>
-            <p>Gross: {{ iceCreamGross | currency:'PHP'}}</p>
-            <p>Profit: {{ iceCreamProfit | currency:'PHP'}}</p>
-          </mat-card-content>
-        </mat-card>
-        <mat-card class="report-by-class-cards">
-          <mat-card-title class="reportTitle">Others</mat-card-title>
-          <mat-card-content>
-            <p>Gross: {{ othersGross | currency:'PHP'}}</p>
-            <p>Profit: {{ othersProfit | currency:'PHP'}}</p>
-          </mat-card-content>
-        </mat-card>
+    <div class="form">
+      <div class="date-field">
+        <form [formGroup]="dateRangeReportForm" class="dateRangeReportForm">
+          <mat-form-field appearance="fill" class="report">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="reportDatePicker">
+              <input formControlName="startDateTemp" matStartDate placeholder="Start date">
+              <input formControlName="endDateTemp" matEndDate placeholder="End date">
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="reportDatePicker"></mat-datepicker-toggle>
+            <mat-date-range-picker #reportDatePicker></mat-date-range-picker>
+          </mat-form-field>
+        </form>
       </div>
-    </mat-card>
+      <div class="form-buttons">
+        <button mat-raised-button color="primary" (click)="findReportRecord()">SEARCH<mat-icon>search</mat-icon></button>
+        <button mat-raised-button color="basic" (click)="reportClearAllCards()" class="report-button-clear">CLEAR<mat-icon> clear_all</mat-icon></button>
+      </div>
+    </div>
+    <div class="space-right">
+    </div>
   </div>
-</form>
+
+  <div class="report-cards">
+    <div class="main-card">
+      <mat-card>
+        <mat-card-title class="reportTitle">Date: {{ reportDateRangeValue }}</mat-card-title>
+        <mat-card-content>
+          <p>Gross: {{ reportGrossValue | currency:'PHP'}}</p>
+          <p>Profit: {{ reportProfitValue | currency:'PHP'}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="breakdown-card">
+      <mat-card class="breakdown-background-card">
+        <mat-card-title class="reportTitle">Break Down</mat-card-title>
+        <div class="report-by-class-card">
+          <mat-card>
+            <mat-card-title class="reportTitle">Branded</mat-card-title>
+            <mat-card-content>
+              <p>Gross: {{ brandedGross | currency:'PHP'}}</p>
+              <p>Profit: {{ brandedProfit | currency:'PHP'}}</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title class="reportTitle">Generics</mat-card-title>
+            <mat-card-content>
+              <p>Gross: {{ genericsGross | currency:'PHP'}}</p>
+              <p>Profit: {{ genericsProfit | currency:'PHP'}}</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title class="reportTitle">Galenicals</mat-card-title>
+            <mat-card-content>
+              <p>Gross: {{ galenicalsGross | currency:'PHP'}}</p>
+              <p>Profit: {{ galenicalsProfit | currency:'PHP'}}</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title class="reportTitle">Ice Cream</mat-card-title>
+            <mat-card-content>
+              <p>Gross: {{ iceCreamGross | currency:'PHP'}}</p>
+              <p>Profit: {{ iceCreamProfit | currency:'PHP'}}</p>
+            </mat-card-content>
+          </mat-card>
+          <mat-card>
+            <mat-card-title class="reportTitle">Others</mat-card-title>
+            <mat-card-content>
+              <p>Gross: {{ othersGross | currency:'PHP'}}</p>
+              <p>Profit: {{ othersProfit | currency:'PHP'}}</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+</div>
