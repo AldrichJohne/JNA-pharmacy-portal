@@ -11,6 +11,8 @@ import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.compone
 import {SharedEventService} from "../../services/shared-event.service";
 import {Subscription} from "rxjs";
 import {AddBatchProductComponent} from "../add-batch-product/add-batch-product.component";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {UpdateProductFormComponent} from "../update-product-form/update-product-form.component";
 
 @Component({
   selector: 'app-product',
@@ -23,6 +25,8 @@ export class ProductComponent implements OnInit {
   notifyStatus = '';
   subscription: Subscription;
   pharmacistOnDuty = '';
+  productPageForm!: FormGroup;
+  currentStock = '';
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -31,7 +35,8 @@ export class ProductComponent implements OnInit {
 
   constructor(private dialog : MatDialog,
               private productService: ProductService,
-              public shareEventService: SharedEventService) {
+              public shareEventService: SharedEventService,
+              private formBuilder : FormBuilder) {
     this.subscription = this.shareEventService.triggerRefreshTable.subscribe(
       message => {
         if (message) {
@@ -42,11 +47,16 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.productPageForm = this.formBuilder.group({
+      addProductDropDownTrigger: ['']
+    });
     this.shareEventService.pharmacistGlobal$.subscribe(value =>{
       this.pharmacistOnDuty = value;
     });
     this.getAllProductList();
   }
+
+
 
   emitGetALlSales() {
     this.shareEventService.triggerRefreshTable.next(true);
@@ -115,6 +125,7 @@ export class ProductComponent implements OnInit {
           this.dataSourceProducts.paginator = this.productsPaginator;
           this.dataSourceProducts.sort = this.sort;
           this.checkProductStatus(res);
+          this.checkProductRemainingStock(res);
         },
         error:()=>{
           this.notifyMessage = 'Error While Fetching The Products';
@@ -149,7 +160,26 @@ export class ProductComponent implements OnInit {
       maxWidth: '100vw', /* Make sure the dialog does not exceed the viewport width */
       maxHeight: '100vh', /* Make sure the dialog does not exceed the viewport height */
       panelClass: 'full-screen-dialog' /* Add a custom class to the dialog */
+    }).afterClosed().subscribe(value => {
+      this.getAllProductList();
     });
+  }
+
+  openUpdateProductForm(row : any) {
+    this.dialog.open(UpdateProductFormComponent, {
+      width: '50%',
+      data: row
+    }).afterClosed().subscribe(val=>{
+      this.getAllProductList();
+    })
+  }
+
+  checkProductRemainingStock(response: any) {
+    for (const row of response) {
+      if (row.remainingStock == 0) {
+        row.remainingStock = "out of stocks";
+      }
+    }
   }
 
   checkProductStatus(response: any) {

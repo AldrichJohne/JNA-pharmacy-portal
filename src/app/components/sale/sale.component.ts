@@ -5,7 +5,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.component";
 import {MatDialog} from "@angular/material/dialog";
-import {DeletePromptSaleComponent} from "../delete-prompt-sale/delete-prompt-sale.component";
+import {DeletePromptSaleComponent} from "../prompts/delete-prompt-sale/delete-prompt-sale.component";
 import {SharedEventService} from "../../services/shared-event.service";
 import {Subscription} from "rxjs";
 

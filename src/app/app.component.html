@@ -1,39 +1,48 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>store</mat-icon>
-  </button>
-  <span>JNA Pharmacy & Happy<mat-icon>pets</mat-icon></span>
-  <span class="example-spacer"></span>
-  <span>
-    <mat-select [formControl]="pharmacistControl" placeholder="select pharmacist">
-      <mat-option [value]="'Nova'">Nova</mat-option>
-      <mat-option [value]="'Jas'">Jas</mat-option>
-      <mat-option [value]="''">select pharmacist</mat-option>
-    </mat-select>
-  </span>
-</mat-toolbar>
-
-<div class="tab-container">
-  <mat-tab-group mat-align-tabs="left">
-    <mat-tab label="PRODUCTS">
-      <div class="productsContainer">
-        <app-product></app-product>
+<div class="main">
+  <div class="toolbar">
+    <mat-toolbar>
+      <div class="logo">
+        <img class="logo-image" src="assets/jnaLogo1.png" height="50">
       </div>
-    </mat-tab>
-
-    <mat-tab label="SALES">
-      <div class="salesContainer">
-        <app-sale></app-sale>
+      <div class="pharmacy-selector">
+        <mat-select [formControl]="pharmacistControl" placeholder="Pharmacist">
+          <mat-option [value]="'Nova'">Nova</mat-option>
+          <mat-option [value]="'Jas'">Jas</mat-option>
+          <mat-option [value]="''">Pharmacist</mat-option>
+        </mat-select>
       </div>
-    </mat-tab>
+    </mat-toolbar>
+  </div>
 
-    <mat-tab label="REPORTS">
-      <div class="reportContainer">
-        <app-report></app-report>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="tab-container">
+    <mat-tab-group mat-align-tabs="left">
+      <mat-tab label="PRODUCTS">
+        <div class="productsContainer">
+          <app-product></app-product>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="SALES">
+        <div class="salesContainer">
+          <app-sale></app-sale>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="REPORTS">
+        <div class="reportContainer">
+          <app-report></app-report>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <div class="footer">
+    <app-footer></app-footer>
+  </div>
 </div>
 
-<app-footer></app-footer>
+
+
+
+
 

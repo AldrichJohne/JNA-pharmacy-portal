@@ -1,46 +1,63 @@
-.dateRangeReportForm {
-  width: 100%;
-}
+.main {
+  .upper-part {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 20%;
+    margin-top: 10px;
 
-.chooseDate {
-  width: 100%;
-}
+    .space-left {
+      width: 30%;
+    }
 
-.report {
-  margin: 10px 10px 10px 10px;
-  width: 25%;
-}
+    .form {
+      width: 30%;
+      text-align: center;
 
-.reportCard {
-  margin: 20px 10px 10px 10px;
-}
+      .date-field {
+        mat-form-field {
+          width: 100%;
+        }
+      }
 
-.reportTitle {
-  font-size: 16px;
-}
+      .form-buttons {
+        margin-top: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
 
-.filterBox {
-  width: 25%;
-}
+    .space-right {
+      width: 30%;
+    }
+  }
+  .report-cards {
+    .main-card {
+      margin-top: 10px;
 
-.addFilterDivider {
-  width: 25%;
-  margin-top: 5px;
-}
+      mat-card {
+        background-color: mediumpurple;
+        color: white;
+      }
+    }
 
-.report-by-class-card {
-  display: flex;
-}
+    .breakdown-card {
+      margin-top: 10px;
 
-.report-by-class-cards {
-  width: 20%;
-}
+      .breakdown-background-card {
+        color: white;
+        background-color: mediumpurple;
+        .report-by-class-card{
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
 
-.report-button{
-  display: flex;
-  margin: 10px 10px 10px 10px;
-}
-
-.report-button-clear{
-  margin-left: 105px;
+          mat-card {
+            width: 15%;
+          }
+        }
+      }
+    }
+  }
 }

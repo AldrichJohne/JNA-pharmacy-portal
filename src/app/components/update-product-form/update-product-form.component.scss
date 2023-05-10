@@ -1,4 +1,23 @@
 .main {
+
+  .product-info{
+    height: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .form-fields {
+    .form {
+      display: flex;
+      justify-content: space-between;
+
+      mat-form-field {
+        width: 30%;
+      }
+    }
+  }
+
   .form-footer {
     margin-top: 5%;
     display: flex;

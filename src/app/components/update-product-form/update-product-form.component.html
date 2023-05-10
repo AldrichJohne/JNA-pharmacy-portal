@@ -1,0 +1,57 @@
+<div class="main">
+  <div class="form-title"><h1>UPDATE PRODUCT</h1></div>
+  <div class="product-info">
+    <div class="left-list-part">
+      <mat-list>
+        <mat-list-item>Name: {{name}}</mat-list-item>
+        <mat-list-item>Class: {{class}}</mat-list-item>
+        <mat-list-item>Expiration: {{expiration}}</mat-list-item>
+      </mat-list>
+    </div>
+    <div class="middle-list-prt">
+      <mat-list>
+        <mat-list-item>Current Stocks: {{currentStock}}</mat-list-item>
+        <mat-list-item>Total Stocks: {{totalStock}}</mat-list-item>
+        <mat-list-item>Sold: {{sold}}</mat-list-item>
+      </mat-list>
+    </div>
+    <div class="right-list-part">
+      <mat-list>
+        <mat-list-item>Capital: {{capital | currency:'PHP'}}</mat-list-item>
+        <mat-list-item>SRP: {{retailPrice | currency:'PHP'}}</mat-list-item>
+        <mat-list-item>Gross: {{gross | currency:'PHP'}}</mat-list-item>
+        <mat-list-item>Profit: {{profit | currency:'PHP'}}</mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+  <div class="form-fields">
+    <form [formGroup]="productForm">
+      <div class="form">
+        <mat-form-field appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input formControlName="name" type="text" matInput placeholder="product name...">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Total Stocks</mat-label>
+          <input formControlName="totalStock" type="number" matInput type="number" placeholder="total stocks..." oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" >
+          <mat-label>Expiration Date</mat-label>
+          <input formControlName="expiryDateTemp" type="text" matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" pattern="^(0[1-9]|1[0-2])\/([1-9]|[12][0-9]|3[01])\/\d{4}$">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+  <div class="form-footer">
+    <div class="space"></div>
+    <div class="form-buttons">
+      <button mat-raised-button color="warn" mat-dialog-close (click)="closeForm()">Cancel</button>
+      <button style="margin-left: 8px;" mat-raised-button color="primary" (click)="updateProduct()">UPDATE</button>
+    </div>
+  </div>
+</div>

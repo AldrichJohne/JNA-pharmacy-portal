@@ -1,46 +1,108 @@
-.filterBox {
-  width: 25%;
+.out-of-stock {
+  background-color: red;
 }
 
-table {
-  width: 100%;
+.main {
+  margin-top: 10px;
+
+  .page-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 10%;
+
+    .buttons {
+      width: 70%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+
+      .menu-button {
+        background-color: mediumpurple;
+        color: white;
+      }
+    }
+
+    .search-bar {
+      width: 30%;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+
+  .page-table {
+    .main-table {
+      width: 100%;
+      height: 500px;
+      overflow-y: auto;
+
+      table {
+        width: 100%;
+
+        th {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+          background-color: mediumpurple;
+          color: white;
+        }
+
+        td {
+          text-align: left;
+        }
+
+        .mat-column-name {
+          word-break: break-word;
+          width: 20%;
+          text-align: left;
+          padding: 10px 10px 10px 10px;
+        }
+      }
+    }
+  }
 }
 
-td {
-  text-align: center;
-}
 
-.addFilterDivider{
-  margin-top: 5px;
-  width: 25%;
-}
-
-.refresh-table {
-  margin-left: 10px;
-}
-
-.mat-column-cashier,
-.mat-column-remainingStock,
-.mat-column-totalStock,
-.mat-column-sold,
-.mat-column-srpPerPc,
-.mat-column-totalPriceRemaining,
-.mat-column-totalPriceSold,
-.mat-column-totalGross,
-.mat-column-profit,
-.mat-column-expiryDate,
-.mat-column-status,
-.mat-column-action,
-.mat-column-pricePerPc,
-.mat-column-className
-{
-  text-align: left;
-  padding: 5px 5px 5px 5px;
-}
-
-.mat-column-name {
-  word-break: break-word;
-  width: 20%;
-  text-align: left;
-  padding: 10px 10px 10px 10px;
-}
+//.filterBox {
+//  width: 25%;
+//}
+//
+//table {
+//  width: 100%;
+//}
+//
+//td {
+//  text-align: center;
+//}
+//
+//.addFilterDivider{
+//  margin-top: 5px;
+//  width: 25%;
+//}
+//
+//.refresh-table {
+//  margin-left: 10px;
+//}
+//
+//.mat-column-cashier,
+//.mat-column-remainingStock,
+//.mat-column-totalStock,
+//.mat-column-sold,
+//.mat-column-srpPerPc,
+//.mat-column-totalPriceRemaining,
+//.mat-column-totalPriceSold,
+//.mat-column-totalGross,
+//.mat-column-profit,
+//.mat-column-expiryDate,
+//.mat-column-status,
+//.mat-column-action,
+//.mat-column-pricePerPc,
+//.mat-column-className
+//{
+//  text-align: left;
+//  padding: 5px 5px 5px 5px;
+//}
+//

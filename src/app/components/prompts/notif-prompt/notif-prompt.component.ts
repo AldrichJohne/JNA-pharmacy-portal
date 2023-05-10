@@ -19,9 +19,9 @@ export class NotifPromptComponent implements OnInit {
 
   checkNotificationStatus() {
     if (this.notifData.notifyStatus == 'OK') {
-      this.icon = 'thumb_up_alt';
+      this.icon = 'sentiment_very_satisfied';
     } else {
-      this.icon = 'thumb_down_alt';
+      this.icon = 'sentiment_very_dissatisfied';
     }
   }
 

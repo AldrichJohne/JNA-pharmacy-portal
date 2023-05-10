@@ -66,21 +66,31 @@ export class AddBatchProductComponent implements OnInit {
       this.notifyStatus = 'ERROR';
       this.openNotifyDialog();
     } else {
-      const convertedExpiryDate = moment(this.addProductForm.value.expiryDateTemp).format('YYYY-MM-DD');
-      this.addProductForm.patchValue({ expiryDate: convertedExpiryDate });
-      const newProduct = {
-        name: this.addProductForm.controls['name'].value,
-        totalStock: this.addProductForm.controls['totalStock'].value,
-        pricePerPc: this.addProductForm.controls['pricePerPc'].value,
-        srpPerPc: this.addProductForm.controls['srpPerPc'].value,
-        expiryDate: this.addProductForm.controls['expiryDate'].value,
-        classId: this.addProductForm.controls['classId'].value,
-      };
+      const capital = this.addProductForm.controls['pricePerPc'].value;
+      const retailPrice = this.addProductForm.controls['srpPerPc'].value;
+      if (capital >= retailPrice) {
+        this.addProductForm.controls['srpPerPc'].setValue('');
+        this.addProductForm.controls['pricePerPc'].setValue('');
+        this.notifyMessage = "Capital should be smaller than SRP.";
+        this.notifyStatus = "ERROR";
+        this.openNotifyDialog();
+      } else {
+        const convertedExpiryDate = moment(this.addProductForm.value.expiryDateTemp).format('YYYY-MM-DD');
+        this.addProductForm.patchValue({ expiryDate: convertedExpiryDate });
+        const newProduct = {
+          name: this.addProductForm.controls['name'].value,
+          totalStock: this.addProductForm.controls['totalStock'].value,
+          pricePerPc: this.addProductForm.controls['pricePerPc'].value,
+          srpPerPc: this.addProductForm.controls['srpPerPc'].value,
+          expiryDate: this.addProductForm.controls['expiryDate'].value,
+          classId: this.addProductForm.controls['classId'].value,
+        };
 
-      this.productList.push(newProduct);
-      this.dataSource.data = this.productList;
-      this.cdRef.detectChanges();
-      this.clearForm();
+        this.productList.push(newProduct);
+        this.dataSource.data = this.productList;
+        this.cdRef.detectChanges();
+        this.clearForm();
+      }
     }
   }
 
