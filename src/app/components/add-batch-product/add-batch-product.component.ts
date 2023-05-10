@@ -138,13 +138,13 @@ export class AddBatchProductComponent implements OnInit {
     this.productService.addBatchProduct(productListFinal)
       .subscribe({
         next:()=>{
-          this.notifyMessage = 'Products Added Successfully.';
-          this.notifyStatus = 'OK';
-          this.openNotifyDialog();
           this.productList = [];
           this.dataSource.data = this.productList;
           this.cdRef.detectChanges();
           this.shareEventService.triggerRefreshTable.next(true);
+          this.notifyMessage = 'Products Added Successfully.';
+          this.notifyStatus = 'OK';
+          this.openNotifyDialog();
         },
         error:()=>{
           this.notifyMessage = 'Error Adding Products';
