@@ -6,7 +6,7 @@ import {BehaviorSubject, Subject} from "rxjs";
 })
 export class SharedEventService {
   private uiVersion = '1.2.0';
-  private pharmacyProductMsApiUrl = 'http://localhost:8081/product-ms';
+  private pharmacyProductMsApiUrl = 'http://localhost:9091/product-ms';
   private pharmacistGlobal = new BehaviorSubject<string>('');
   pharmacistGlobal$ = this.pharmacistGlobal.asObservable();
 
