@@ -27,6 +27,29 @@ export class ProductComponent implements OnInit {
   pharmacistOnDuty = '';
   productPageForm!: FormGroup;
   currentStock = '';
+  currentCartValue = 0;
+  productListOnCart: any[] = [{
+    "transactionDate": "2023-05-31",
+    "classification": "ice cream",
+    "productName": "Choco Crispy",
+    "price": "18",
+    "srp": "21",
+    "soldQuantity": "1",
+    "productId": "181",
+    "pharmacist": "Nova",
+    "isDiscounted": "false"
+  },
+    {
+      "transactionDate": "2023-05-31",
+      "classification": "generics",
+      "productName": "Symdex",
+      "price": "1",
+      "srp": "5",
+      "soldQuantity": "1",
+      "productId": "194",
+      "pharmacist": "Jas",
+      "isDiscounted": "true"
+    }];
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -47,6 +70,7 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentCartValue = this.productListOnCart.length;
     this.productPageForm = this.formBuilder.group({
       addProductDropDownTrigger: ['']
     });
