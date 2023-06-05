@@ -24,7 +24,7 @@ export class SharedEventService {
 
   triggerRefreshTable = new Subject<any>();
 
-  triggerRefreshTableV2 = new Subject<any>();
-
   batchAddButtonTrigger = new Subject<any>();
+
+  addNewItemToCart = new Subject<any>();
 }

@@ -28,28 +28,7 @@ export class ProductComponent implements OnInit {
   productPageForm!: FormGroup;
   currentStock = '';
   currentCartValue = 0;
-  productListOnCart: any[] = [{
-    "transactionDate": "2023-05-31",
-    "classification": "ice cream",
-    "productName": "Choco Crispy",
-    "price": "18",
-    "srp": "21",
-    "soldQuantity": "1",
-    "productId": "181",
-    "pharmacist": "Nova",
-    "isDiscounted": "false"
-  },
-    {
-      "transactionDate": "2023-05-31",
-      "classification": "generics",
-      "productName": "Symdex",
-      "price": "1",
-      "srp": "5",
-      "soldQuantity": "1",
-      "productId": "194",
-      "pharmacist": "Jas",
-      "isDiscounted": "true"
-    }];
+  productListOnCart: any[] = [];
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -64,9 +43,16 @@ export class ProductComponent implements OnInit {
       message => {
         if (message) {
           this.getAllProductList();
+          this.currentCartValue = this.productListOnCart.length;
         }
       }
     );
+
+    this.subscription = this.shareEventService.addNewItemToCart.subscribe(
+      newItem => {
+        this.productListOnCart.push(newItem);
+      }
+    )
   }
 
   ngOnInit(): void {
