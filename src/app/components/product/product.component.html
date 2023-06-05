@@ -6,7 +6,7 @@
         <button mat-menu-item (click)="openProductDialog()">Add Single</button>
         <button mat-menu-item (click)="openAddBatchProductDialog()">Add Multiple</button>
       </mat-menu>
-      <button class="cart-button" mat-button>
+      <button class="cart-button" mat-button (click)="openCart()">
         <mat-icon class="cart-icon">shopping_cart</mat-icon><sup class="exponent">{{currentCartValue}}</sup>
       </button>
     </div>

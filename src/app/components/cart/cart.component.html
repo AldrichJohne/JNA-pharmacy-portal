@@ -1,0 +1,77 @@
+<div class="main">
+  <div class="header">
+    <div class="table-wrapper">
+      <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="productId">
+          <th mat-header-cell *matHeaderCellDef>Product ID</th>
+          <td mat-cell *matCellDef="let item">{{ item.productId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Product Name</th>
+          <td mat-cell *matCellDef="let item">{{ item.productName }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="class">
+          <th mat-header-cell *matHeaderCellDef>Class</th>
+          <td mat-cell *matCellDef="let item">{{ item.classification }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Capital</th>
+          <td mat-cell *matCellDef="let item">{{ item.price }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="srp">
+          <th mat-header-cell *matHeaderCellDef>Retail Price</th>
+          <td mat-cell *matCellDef="let item">{{ item.srp }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>QTY</th>
+          <td mat-cell *matCellDef="let item">{{ item.soldQuantity }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isDiscounted">
+          <th mat-header-cell *matHeaderCellDef>Is Discounted</th>
+          <td mat-cell *matCellDef="let item">{{ item.isDiscounted }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="pharmacist">
+          <th mat-header-cell *matHeaderCellDef>Pharmacist</th>
+          <td mat-cell *matCellDef="let item">{{ item.pharmacist }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="transactionDate">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let item">{{ item.transactionDate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let item">
+            <button mat-icon-button color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <div class="calculator">
+      <div class="total-price-card">
+        <mat-card>
+          <mat-card-title class="reportTitle">Total Price: {{totalPrice}}</mat-card-title>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="space"></div>
+    <div class="other-button-wrapper">
+      <button mat-raised-button color="warn" (click)="confirmClose()">Close</button>
+    </div>
+  </div>
+</div>

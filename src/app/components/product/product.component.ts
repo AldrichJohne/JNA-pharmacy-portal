@@ -13,6 +13,7 @@ import {Subscription} from "rxjs";
 import {AddBatchProductComponent} from "../add-batch-product/add-batch-product.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UpdateProductFormComponent} from "../update-product-form/update-product-form.component";
+import {CartComponent} from "../cart/cart.component";
 
 @Component({
   selector: 'app-product',
@@ -48,11 +49,7 @@ export class ProductComponent implements OnInit {
       }
     );
 
-    this.subscription = this.shareEventService.addNewItemToCart.subscribe(
-      newItem => {
-        this.productListOnCart.push(newItem);
-      }
-    )
+    this.productListOnCart = this.shareEventService.cartItems;
   }
 
   ngOnInit(): void {
@@ -105,6 +102,17 @@ export class ProductComponent implements OnInit {
         this.emitGetALlSales();
       })
     }
+  }
+
+  openCart() {
+    this.dialog.open(CartComponent, {
+      width: '100vw',
+      height: '100vh',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      panelClass: 'full-screen-dialog',
+      data: this.productListOnCart
+    })
   }
 
   openDeletePrompt(row : any) {
