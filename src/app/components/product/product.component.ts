@@ -13,6 +13,7 @@ import {Subscription} from "rxjs";
 import {AddBatchProductComponent} from "../add-batch-product/add-batch-product.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {UpdateProductFormComponent} from "../update-product-form/update-product-form.component";
+import {CartComponent} from "../cart/cart.component";
 
 @Component({
   selector: 'app-product',
@@ -27,6 +28,8 @@ export class ProductComponent implements OnInit {
   pharmacistOnDuty = '';
   productPageForm!: FormGroup;
   currentStock = '';
+  currentCartValue = 0;
+  productListOnCart: any[] = [];
 
   displayedColumnsProducts: string[] = ['cashier', 'name', 'className', 'remainingStock', 'totalStock', 'sold', 'pricePerPc', 'srpPerPc', 'totalGross', 'profit', 'expiryDate', 'status', 'action'];
   dataSourceProducts!: MatTableDataSource<any>;
@@ -41,12 +44,16 @@ export class ProductComponent implements OnInit {
       message => {
         if (message) {
           this.getAllProductList();
+          this.currentCartValue = this.productListOnCart.length;
         }
       }
     );
+
+    this.productListOnCart = this.shareEventService.cartItems;
   }
 
   ngOnInit(): void {
+    this.currentCartValue = this.productListOnCart.length;
     this.productPageForm = this.formBuilder.group({
       addProductDropDownTrigger: ['']
     });
@@ -95,6 +102,17 @@ export class ProductComponent implements OnInit {
         this.emitGetALlSales();
       })
     }
+  }
+
+  openCart() {
+    this.dialog.open(CartComponent, {
+      width: '100vw',
+      height: '100vh',
+      maxWidth: '100vw',
+      maxHeight: '100vh',
+      panelClass: 'full-screen-dialog',
+      data: this.productListOnCart
+    })
   }
 
   openDeletePrompt(row : any) {

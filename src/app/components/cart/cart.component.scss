@@ -1,0 +1,53 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    height: 85%;
+
+    .table-wrapper {
+      width: 85%;
+      flex-grow: 1;
+      height: 90%;
+      overflow-y: scroll;
+      background-color: mediumpurple;
+
+      table {
+        width: 100%;
+
+        th {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+          background-color: mediumpurple;
+          color: white;
+        }
+      }
+    }
+
+    .calculator {
+      width: 15%;
+      background-color: mediumvioletred;
+    }
+  }
+  .footer {
+    height: 15%;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .space {
+      width: 80%;
+      background-color: mediumaquamarine;
+    }
+
+    .other-button-wrapper {
+      width: 20%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+  }
+}

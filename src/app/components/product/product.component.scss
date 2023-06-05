@@ -22,6 +22,25 @@
         background-color: mediumpurple;
         color: white;
       }
+
+      .cart-button {
+        margin-left: 10px;
+        background-color: mediumpurple;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .cart-icon {
+          font-size: 2rem;
+          margin-right: 0.5rem;
+          color: white;
+        }
+
+        .exponent {
+          font-size: 1rem;
+          color: white;
+        }
+      }
     }
 
     .search-bar {

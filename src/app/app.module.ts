@@ -40,6 +40,7 @@ import { AddBatchProductsConfirmationPromptsComponent } from './components/promp
 import {MatMenuModule} from '@angular/material/menu';
 import { UpdateProductFormComponent } from './components/update-product-form/update-product-form.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     FooterComponent,
     AddBatchProductComponent,
     AddBatchProductsConfirmationPromptsComponent,
-    UpdateProductFormComponent
+    UpdateProductFormComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

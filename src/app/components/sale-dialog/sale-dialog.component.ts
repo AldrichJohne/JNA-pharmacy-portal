@@ -20,6 +20,7 @@ export class SaleDialogComponent implements OnInit {
   notifyStatus = '';
   notifyMessage = '';
   pharmacistOnDuty = '';
+  productToCart: any[] = [];
 
   constructor(private formBuilder : FormBuilder,
               private cashierService: CashierService,
@@ -40,11 +41,43 @@ export class SaleDialogComponent implements OnInit {
       soldQuantity:['',Validators.required],
       transactionDateTemp:['',Validators.required],
       transactionDate:[''],
-      discountSwitch:['',Validators.required],
+      isDiscounted:['',Validators.required],
       productId:['', Validators.required],
       pharmacist:['', Validators.required]
     })
     this.readyFields();
+  }
+
+  sellBatchProduct() {
+    if (this.productSaleForm.controls['soldQuantity'].value > +this.saleData.remainingStock) {
+      this.notifyMessage = 'You cannot sell more than what is remaining';
+      this.notifyStatus = 'ERROR';
+      this.openNotifyDialog();
+      this.productSaleForm.reset();
+      this.dialogRef.close();
+    } else {
+      if (this.productSaleForm.controls['pharmacist'].value == "" || this.productSaleForm.controls['soldQuantity'].value == "") {
+        this.notifyMessage = 'Missing required field/s';
+        this.notifyStatus = 'ERROR';
+        this.openNotifyDialog();
+        this.productSaleForm.reset();
+        this.dialogRef.close();
+      } else {
+        this.enableRequiredAdditionalFields();
+        this.productSaleForm.controls['productId'].setValue(this.saleData.id);
+        const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
+        this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
+        this.productSaleForm.controls['transactionDateTemp'].disable();
+
+        // this.shareEventService.addNewItemToCart.next(this.productSaleForm.value);
+        this.shareEventService.addItemToCart(this.productSaleForm.value);
+        this.notifyMessage = 'Product Added To Cart Success';
+        this.notifyStatus = 'OK';
+        this.openNotifyDialog()
+        this.productSaleForm.reset();
+        this.dialogRef.close('sale');
+      }
+    }
   }
 
   sellProduct() {
@@ -65,15 +98,14 @@ export class SaleDialogComponent implements OnInit {
         this.enableRequiredAdditionalFields();
         this.productSaleForm.controls['productId'].setValue(this.saleData.id);
         const convertedTransactionDate = moment(this.productSaleForm.value.transactionDateTemp).format('YYYY-MM-DD');
-        const discountSwitch = this.productSaleForm.controls['discountSwitch'].value;
+        const isDiscounted = this.productSaleForm.controls['isDiscounted'].value;
         this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
         this.productSaleForm.controls['transactionDateTemp'].disable();
-        this.productSaleForm.controls['discountSwitch'].disable();
 
         this.cashierService.productSale(
           this.productSaleForm.value,
           this.saleData.id,
-          discountSwitch)
+          isDiscounted)
           .subscribe({
             next:()=>{
               this.notifyMessage = 'Product Sell Success';
@@ -97,8 +129,8 @@ export class SaleDialogComponent implements OnInit {
 
   private readyFields() {
     if (this.saleData.plainClassificationDto.name !== 'generics') {
-      this.productSaleForm.controls['discountSwitch'].setValue(false);
-      this.productSaleForm.controls['discountSwitch'].disable();
+      this.productSaleForm.controls['isDiscounted'].setValue(false);
+      this.productSaleForm.controls['isDiscounted'].disable();
     }
     if (this.saleData.remainingStock <= 0) {
       this.productSaleFormTitle = 'THIS PRODUCT IS OUT OF STOCK'
@@ -116,7 +148,7 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['srp'].setValue(this.saleData.srpPerPc);
     this.productSaleForm.controls['transactionDateTemp'].setValue(this.currentDate);
     this.productSaleForm.controls['transactionDate'].disable();
-    this.productSaleForm.controls['discountSwitch'].setValue(false);
+    this.productSaleForm.controls['isDiscounted'].setValue(false);
     this.productSaleForm.controls['productId'].disable();
     this.productSaleForm.controls['pharmacist'].setValue(this.pharmacistOnDuty);
   }
@@ -127,7 +159,7 @@ export class SaleDialogComponent implements OnInit {
     this.productSaleForm.controls['productName'].enable();
     this.productSaleForm.controls['price'].enable();
     this.productSaleForm.controls['srp'].enable();
-    this.productSaleForm.controls['discountSwitch'].enable();
+    this.productSaleForm.controls['isDiscounted'].enable();
     this.productSaleForm.controls['productId'].enable();
 
   }
@@ -138,5 +170,4 @@ export class SaleDialogComponent implements OnInit {
       data: { notifyMessage: this.notifyMessage, notifyStatus: this.notifyStatus }
     });
   }
-
 }
