@@ -60,11 +60,25 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
     </div>
-    <div class="calculator">
-      <div class="total-price-card">
-        <mat-card>
-          <mat-card-title class="reportTitle">Total Price: {{totalPrice}}</mat-card-title>
-        </mat-card>
+    <div class="side-form">
+      <div class="label">
+        <mat-list role="list">
+          <mat-list-item role="listitem"><mat-label>Total Price: {{totalPrice | currency:'PHP'}}</mat-label></mat-list-item>
+          <mat-list-item role="listitem"><mat-label>Payment: {{payment | currency:'PHP'}}</mat-label></mat-list-item>
+          <mat-list-item role="listitem"><mat-label>Change: {{change | currency:'PHP'}}</mat-label></mat-list-item>
+        </mat-list>
+      </div>
+      <form [formGroup]="cartForm">
+        <div class="payment-form-field">
+          <mat-form-field appearance="outline">
+            <mat-label>Payment</mat-label>
+            <input formControlName="payment" matInput oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          </mat-form-field>
+        </div>
+      </form>
+      <div class="cart-form-buttons">
+        <button mat-raised-button color="warn" (click)="clearField()">Clear</button>
+        <button mat-raised-button color="primary" (click)="confirmPayment()">Confirm</button>
       </div>
     </div>
   </div>

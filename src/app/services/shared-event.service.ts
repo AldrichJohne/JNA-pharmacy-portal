@@ -8,9 +8,9 @@ export class SharedEventService {
   private uiVersion = '1.2.0';
   private pharmacyProductMsApiUrl = 'http://localhost:8081/product-ms';
   private pharmacistGlobal = new BehaviorSubject<string>('');
-  private cartItemsGlobal = new BehaviorSubject<any>('');
+  discountRate = .8;
   cartItems: any[] = [];
-  cartItemsGlobal$ = this.cartItemsGlobal.asObservable();
+  cartTotalSrp = 0;
   pharmacistGlobal$ = this.pharmacistGlobal.asObservable();
 
   updatePharmacist(newPharmacistValue : string) {
@@ -26,7 +26,17 @@ export class SharedEventService {
   }
 
   addItemToCart(item : any) {
+    let totalSrp = 0;
     this.cartItems.push(item);
+    for (const element of this.cartItems) {
+      if (element.isDiscounted === false) {
+        totalSrp = totalSrp + (element.srp * element.soldQuantity);
+      }
+      else {
+        totalSrp = totalSrp + ((element.srp * element.soldQuantity) * this.discountRate)
+      }
+    }
+    this.cartTotalSrp = totalSrp;
   }
 
   getCartItems() {
@@ -37,5 +47,4 @@ export class SharedEventService {
 
   batchAddButtonTrigger = new Subject<any>();
 
-  addNewItemToCart = new Subject<any>();
 }

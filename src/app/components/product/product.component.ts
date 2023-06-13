@@ -105,14 +105,20 @@ export class ProductComponent implements OnInit {
   }
 
   openCart() {
-    this.dialog.open(CartComponent, {
-      width: '100vw',
-      height: '100vh',
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      panelClass: 'full-screen-dialog',
-      data: this.productListOnCart
-    })
+    if (this.productListOnCart.length === 0) {
+      this.notifyMessage = 'Cart is empty'
+      this.notifyStatus = 'ERROR';
+      this.openNotifyDialog();
+    } else {
+      this.dialog.open(CartComponent, {
+        width: '100vw',
+        height: '100vh',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        panelClass: 'full-screen-dialog',
+        data: this.productListOnCart
+      })
+    }
   }
 
   openDeletePrompt(row : any) {
