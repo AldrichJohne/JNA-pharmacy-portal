@@ -41,6 +41,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import { UpdateProductFormComponent } from './components/update-product-form/update-product-form.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { CartComponent } from './components/cart/cart.component';
+import {DatePipe} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -88,7 +89,7 @@ import { CartComponent } from './components/cart/cart.component';
     MatMenuModule,
     MatGridListModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
