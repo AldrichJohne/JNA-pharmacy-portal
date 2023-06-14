@@ -12,7 +12,6 @@
       flex-grow: 1;
       height: 90%;
       overflow-y: scroll;
-      background-color: mediumpurple;
 
       table {
         width: 100%;
@@ -21,15 +20,50 @@
           position: sticky;
           top: 0;
           z-index: 1;
-          background-color: mediumpurple;
           color: white;
+          background-color: mediumpurple;
+        }
+
+        td {
         }
       }
     }
 
-    .calculator {
+    .side-form {
       width: 15%;
-      background-color: mediumvioletred;
+      padding-left: 20px;
+
+      .label{
+
+      }
+
+      .payment-form-field{
+
+      }
+
+      .cart-form-buttons-1 {
+        height: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+          width: 50%;
+          margin-right: 10px;
+        }
+      }
+
+      .cart-form-buttons-2 {
+        height: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+          width: 50%;
+          margin-right: 10px;
+        }
+      }
     }
   }
   .footer {
@@ -40,7 +74,6 @@
 
     .space {
       width: 80%;
-      background-color: mediumaquamarine;
     }
 
     .other-button-wrapper {

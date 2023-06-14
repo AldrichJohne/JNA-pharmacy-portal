@@ -21,7 +21,7 @@ export class SaleComponent implements OnInit {
   eventEmitter = false;
   subscription: Subscription;
 
-  displayedColumnsSales: string[] = ['pharmacist', 'name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate', 'action'];
+  displayedColumnsSales: string[] = ['pharmacist', 'name','classification','price','srp','sold','amount','profit','isDiscounted', 'invoice','transactionDate', 'action'];
   dataSourceSales!: MatTableDataSource<any>;
   @ViewChild('salesPaginator') salesPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,7 +29,7 @@ export class SaleComponent implements OnInit {
   constructor(private cashierService: CashierService,
               private dialog : MatDialog,
               public shareEventService: SharedEventService) {
-    this.subscription = this.shareEventService.triggerRefreshTable.subscribe(
+    this.subscription = this.shareEventService.refreshProductTab.subscribe(
       message => {
         this.eventEmitter = message;
         if (this.eventEmitter) {
@@ -44,7 +44,7 @@ export class SaleComponent implements OnInit {
   }
 
   emitGetAllProducts() {
-    this.shareEventService.triggerRefreshTable.next(true);
+    this.shareEventService.refreshProductTab.next(true);
   }
 
   getAllSales() {

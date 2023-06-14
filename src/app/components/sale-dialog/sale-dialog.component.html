@@ -4,7 +4,7 @@
       <div style="display: flex; justify-content: space-between;">
         <mat-form-field appearance="outline" style="flex: 1;">
           <mat-label>Quantity</mat-label>
-          <input formControlName="soldQuantity" matInput>
+          <input formControlName="soldQuantity" matInput oninput="this.value = this.value.replace(/[^0-9]/g, '')">
         </mat-form-field>
 
         <mat-form-field appearance="outline" style="flex: 1; margin-left: 10px;">

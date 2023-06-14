@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
               private productService: ProductService,
               public shareEventService: SharedEventService,
               private formBuilder : FormBuilder) {
-    this.subscription = this.shareEventService.triggerRefreshTable.subscribe(
+    this.subscription = this.shareEventService.refreshProductTab.subscribe(
       message => {
         if (message) {
           this.getAllProductList();
@@ -66,7 +66,7 @@ export class ProductComponent implements OnInit {
 
 
   emitGetALlSales() {
-    this.shareEventService.triggerRefreshTable.next(true);
+    this.shareEventService.refreshProductTab.next(true);
   }
 
   openProductDialog() {
@@ -105,14 +105,20 @@ export class ProductComponent implements OnInit {
   }
 
   openCart() {
-    this.dialog.open(CartComponent, {
-      width: '100vw',
-      height: '100vh',
-      maxWidth: '100vw',
-      maxHeight: '100vh',
-      panelClass: 'full-screen-dialog',
-      data: this.productListOnCart
-    })
+    if (this.productListOnCart.length === 0) {
+      this.notifyMessage = 'Cart is empty'
+      this.notifyStatus = 'ERROR';
+      this.openNotifyDialog();
+    } else {
+      this.dialog.open(CartComponent, {
+        width: '100vw',
+        height: '100vh',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
+        panelClass: 'full-screen-dialog',
+        data: this.productListOnCart
+      })
+    }
   }
 
   openDeletePrompt(row : any) {
