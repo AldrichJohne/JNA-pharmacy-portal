@@ -40,7 +40,7 @@ export class ProductComponent implements OnInit {
               private productService: ProductService,
               public shareEventService: SharedEventService,
               private formBuilder : FormBuilder) {
-    this.subscription = this.shareEventService.triggerRefreshTable.subscribe(
+    this.subscription = this.shareEventService.refreshProductTab.subscribe(
       message => {
         if (message) {
           this.getAllProductList();
@@ -66,7 +66,7 @@ export class ProductComponent implements OnInit {
 
 
   emitGetALlSales() {
-    this.shareEventService.triggerRefreshTable.next(true);
+    this.shareEventService.refreshProductTab.next(true);
   }
 
   openProductDialog() {

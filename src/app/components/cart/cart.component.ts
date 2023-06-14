@@ -18,7 +18,7 @@ export class CartComponent implements OnInit {
   cartForm!: FormGroup;
   productsOnCart: any;
   displayedColumns: string[] = ['productId', 'name', 'class', 'price', 'srp', 'quantity', 'isDiscounted', 'pharmacist', 'transactionDate', 'actions'];
-  dataSource = new MatTableDataSource(this.cartData);
+  dataSource = new MatTableDataSource(this.shareEventService.cartItems);
   totalPrice = 0;
   payment = 0;
   change = 0;
@@ -28,9 +28,13 @@ export class CartComponent implements OnInit {
   businessAlias = 'JNAPh';
   businessAddress = 'Sinabaan, Bantay, Ilocos Sur';
   businessTIN = '000-111-2222';
+  txnInvoice = '';
   vatRate = 12;
-  vatSale = 0;
+  vatSale: string = '';
   receiptProducts: any[] = [];
+  productSavedVerified: Object = [];
+  receiptButtonStatus = true;
+  calcButtonStatus = false;
 
 
   constructor(private formBuilder : FormBuilder,
@@ -57,6 +61,13 @@ export class CartComponent implements OnInit {
     });
   }
 
+  removeProductFromList(row : any) {
+    this.shareEventService.removeItemFromCart(row);
+    this.dataSource = new MatTableDataSource(this.shareEventService.cartItems);
+    this.shareEventService.refreshProductTab.next(true);
+    this.totalPrice = this.shareEventService.cartTotalSrp;
+  }
+
   confirmClose(){
     this.dialogRef.close();
   }
@@ -76,6 +87,28 @@ export class CartComponent implements OnInit {
     } else {
       this.payment = this.cartForm.controls['payment'].value;
       this.change = this.payment - this.totalPrice;
+
+      this.cashierService.batchProductSale(this.cartData)
+        .subscribe({
+          next:(res)=> {
+            // @ts-ignore
+            this.txnInvoice = res[0].invoiceCode;
+            this.productSavedVerified = res;
+            this.notifyMessage = 'Product Sell Success';
+            this.notifyStatus = 'OK';
+            this.openNotifyDialog();
+            this.productsOnCart = res;
+            this.shareEventService.removeItemsFromCart();
+            this.cartForm.reset();
+            this.receiptButtonStatus = false;
+            this.calcButtonStatus = true;
+            this.shareEventService.refreshProductTab.next(true);
+          }, error: ()=> {
+            this.notifyMessage = 'Error Saving Sale';
+            this.notifyStatus = 'ERROR';
+            this.openNotifyDialog();
+          }
+        })
     }
   }
 
@@ -96,45 +129,52 @@ export class CartComponent implements OnInit {
     // @ts-ignore
     doc.text(currentDateTime, startX, startY);
     startY += textSpacing;
-    doc.text('Txn #:SAMPLE00111', startX, startY);
+    doc.text('Txn #:' + this.txnInvoice, startX, startY);
     startY += textSpacing;
-    startY += textSpacing;
+    doc.text('________________________', startX, startY);
 
-    doc.text('SUBTOTAL: ' + this.totalPrice, startX, startY);
-    startY += textSpacing;
-    doc.text('(V)Vatable Sales: ' + this.vatSale, startX, startY);
-    startY += textSpacing;
-    doc.text('VAT Amount: ' + this.generateVATAmount(), startX, startY);
-
-    // Product table headers
+    //Product Table
     const headers = ["product", "qty", "price"];
     const tableTopMargin = startY + textSpacing;
 
-    // Draw table headers
     let tableX = startX;
     const tableY = tableTopMargin;
-    const cellWidth = 40;
+    const cellWidth = 30;
     const cellHeight = textSpacing;
 
-    headers.forEach((header, index) => {
+    headers.forEach((header) => {
       doc.text(header, tableX, tableY);
       tableX += cellWidth;
     });
 
-    // Product data
     const products = this.receiptProducts;
 
-    // Draw product data
     let dataX = startX;
     let dataY = tableY + cellHeight;
 
     products.forEach((product) => {
-      doc.text(product.productName, dataX, dataY);
+      const productNameLines = doc.splitTextToSize(product.productName, cellWidth);
+      for (let i = 0; i < productNameLines.length; i++) {
+        doc.text(productNameLines[i], dataX, dataY + i * cellHeight);
+      }
       doc.text(product.qty.toString(), dataX + cellWidth, dataY);
-      doc.text(product.price.toString(), dataX + 2 * cellWidth, dataY);
-      dataY += cellHeight;
+      doc.text(product.price.toFixed(2), dataX + 2 * cellWidth, dataY);
+      dataY += cellHeight * Math.max(productNameLines.length, 1);
     });
-    doc.text('__________________________________' + this.totalPrice, startX, startY);
+
+    doc.text('________________________', startX, dataY);
+    dataY += textSpacing;
+    doc.text('VAT Amount('+this.vatRate+'%): ' + this.generateVATAmount(), startX, dataY);
+    dataY += textSpacing;
+    doc.text('(V)Vatable Sales: ' + this.vatSale, startX, dataY);
+    dataY += textSpacing;
+    dataY += textSpacing;
+    doc.text('SUBTOTAL: ' + this.totalPrice, startX, dataY);
+    dataY += textSpacing;
+    doc.text('AMOUNT TENDERED: ' + this.payment, startX, dataY);
+    dataY += textSpacing;
+    doc.text('CHANGE: ' + this.change, startX, dataY);
+    dataY += textSpacing;
 
     try {
       doc.save(this.businessAlias + this.generateFormattedCurrentDateTime());
@@ -149,7 +189,8 @@ export class CartComponent implements OnInit {
     const totalAmount = this.totalPrice;
     const vatPercentage = this.vatRate;
     const vatAmount = (totalAmount * vatPercentage) / (100 + vatPercentage);
-    this.vatSale = this.totalPrice - vatAmount;
+    let unformattedVatSale = this.totalPrice - vatAmount;
+    this.vatSale = unformattedVatSale.toFixed(2);
     return vatAmount.toFixed(2)
   }
 
@@ -165,7 +206,8 @@ export class CartComponent implements OnInit {
   }
 
   generateProductOnReceipt() {
-    for (const element of this.cartData) {
+    // @ts-ignore
+    for (const element of this.productSavedVerified) {
       let price = element.soldQuantity * element.srp;
       const newProductOnReceipt = {
         productName: element.productName,
@@ -174,8 +216,6 @@ export class CartComponent implements OnInit {
       };
       this.receiptProducts.push(newProductOnReceipt);
     }
-    console.log(this.receiptProducts);
   }
-
 
 }

@@ -18,6 +18,10 @@ export class CashierService {
     return this.http.post(this.pharmacyProductMsApiUrl + '/cashier/product/sell/' + id, data, {params})
   }
 
+  batchProductSale(data : any) {
+    return this.http.post(this.pharmacyProductMsApiUrl + '/cashier/v2/product/batch/sell', data)
+  }
+
   getProductSales() {
     return this.http.get<any>(this.pharmacyProductMsApiUrl + '/cashier/products/sell')
   }

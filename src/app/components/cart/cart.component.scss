@@ -41,12 +41,28 @@
 
       }
 
-      .cart-form-buttons {
-        height: 25%;
+      .cart-form-buttons-1 {
+        height: 10%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 10%;
+
+        button {
+          width: 50%;
+          margin-right: 10px;
+        }
+      }
+
+      .cart-form-buttons-2 {
+        height: 10%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+          width: 50%;
+          margin-right: 10px;
+        }
       }
     }
   }

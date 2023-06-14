@@ -141,7 +141,7 @@ export class AddBatchProductComponent implements OnInit {
           this.productList = [];
           this.dataSource.data = this.productList;
           this.cdRef.detectChanges();
-          this.shareEventService.triggerRefreshTable.next(true);
+          this.shareEventService.refreshProductTab.next(true);
           this.notifyMessage = 'Products Added Successfully.';
           this.notifyStatus = 'OK';
           this.openNotifyDialog();
@@ -150,7 +150,7 @@ export class AddBatchProductComponent implements OnInit {
           this.notifyMessage = 'Error Adding Products';
           this.notifyStatus = 'ERROR';
           this.openNotifyDialog();
-          this.shareEventService.triggerRefreshTable.next(true);
+          this.shareEventService.refreshProductTab.next(true);
         }
       })
   }

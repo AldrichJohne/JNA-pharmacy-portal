@@ -26,8 +26,23 @@ export class SharedEventService {
   }
 
   addItemToCart(item : any) {
-    let totalSrp = 0;
     this.cartItems.push(item);
+    this.computeTotalSrp();
+  }
+
+  removeItemsFromCart() {
+    this.cartItems.splice(0, this.cartItems.length);
+    this.computeTotalSrp();
+  }
+
+  removeItemFromCart(row : any) {
+    const index = this.cartItems.indexOf(row);
+    this.cartItems.splice(index, 1);
+    this.computeTotalSrp();
+  }
+
+  private computeTotalSrp() {
+    let totalSrp = 0;
     for (const element of this.cartItems) {
       if (element.isDiscounted === false) {
         totalSrp = totalSrp + (element.srp * element.soldQuantity);
@@ -43,7 +58,7 @@ export class SharedEventService {
     return this.cartItems;
   }
 
-  triggerRefreshTable = new Subject<any>();
+  refreshProductTab = new Subject<any>();
 
   batchAddButtonTrigger = new Subject<any>();
 

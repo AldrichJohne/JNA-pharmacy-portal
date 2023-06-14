@@ -69,7 +69,6 @@ export class SaleDialogComponent implements OnInit {
         this.productSaleForm.patchValue({ transactionDate: convertedTransactionDate });
         this.productSaleForm.controls['transactionDateTemp'].disable();
 
-        // this.shareEventService.addNewItemToCart.next(this.productSaleForm.value);
         this.shareEventService.addItemToCart(this.productSaleForm.value);
         this.notifyMessage = 'Product Added To Cart Success';
         this.notifyStatus = 'OK';
