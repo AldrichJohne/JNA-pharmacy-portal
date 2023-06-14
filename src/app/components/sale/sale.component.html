@@ -65,6 +65,12 @@
           <td mat-cell *matCellDef="let row"> {{row.isDiscounted}} </td>
         </ng-container>
 
+        <!-- invoice -->
+        <ng-container matColumnDef="invoice">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice </th>
+          <td mat-cell *matCellDef="let row"> {{row.invoiceCode}} </td>
+        </ng-container>
+
         <!-- transaction date column -->
         <ng-container matColumnDef="transactionDate">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>

@@ -21,7 +21,7 @@ export class SaleComponent implements OnInit {
   eventEmitter = false;
   subscription: Subscription;
 
-  displayedColumnsSales: string[] = ['pharmacist', 'name','classification','price','srp','sold','amount','profit','isDiscounted','transactionDate', 'action'];
+  displayedColumnsSales: string[] = ['pharmacist', 'name','classification','price','srp','sold','amount','profit','isDiscounted', 'invoice','transactionDate', 'action'];
   dataSourceSales!: MatTableDataSource<any>;
   @ViewChild('salesPaginator') salesPaginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
