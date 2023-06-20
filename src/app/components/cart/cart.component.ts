@@ -7,6 +7,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {NotifPromptComponent} from "../prompts/notif-prompt/notif-prompt.component";
 import {jsPDF} from 'jspdf';
 import {DatePipe} from '@angular/common';
+import {VersionDisplayService} from "../../services/version-display.service";
 
 @Component({
   selector: 'app-cart',
@@ -24,10 +25,10 @@ export class CartComponent implements OnInit {
   change = 0;
   notifyMessage = '';
   notifyStatus = '';
-  businessName = 'JNA Pharmacy';
-  businessAlias = 'JNAPh';
-  businessAddress = 'Sinabaan, Bantay, Ilocos Sur';
-  businessTIN = '000-111-2222';
+  businessName = '';
+  businessAlias = '';
+  businessAddress = '';
+  businessTIN = '';
   txnInvoice = '';
   vatRate = 12;
   vatSale: string = '';
@@ -43,9 +44,11 @@ export class CartComponent implements OnInit {
               private dialogRef : MatDialogRef<CartComponent>,
               private dialog : MatDialog,
               public shareEventService: SharedEventService,
-              public datePipe: DatePipe) { }
+              public datePipe: DatePipe,
+              private versionDisplayService: VersionDisplayService) { }
 
   ngOnInit(): void {
+    this.getBusinessInfo();
     this.cartForm = this.formBuilder.group({
       payment:['',Validators.required]
     })
@@ -110,6 +113,17 @@ export class CartComponent implements OnInit {
           }
         })
     }
+  }
+
+  getBusinessInfo() {
+    this.versionDisplayService.healthCheck().subscribe({
+      next:(res) => {
+        this.businessName = res.businessInfo.businessName;
+        this.businessAlias = res.businessInfo.businessAlias;
+        this.businessAddress = res.businessInfo.businessAddress;
+        this.businessTIN = res.businessInfo.businessTin;
+      }
+    })
   }
 
   generateReceipt() {
